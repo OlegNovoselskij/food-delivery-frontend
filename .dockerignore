@@ -1,0 +1,12 @@
+node_modules
+dist
+coverage
+playwright-report
+test-results
+.git
+.claude
+.env.local
+.env.production
+docs
+design
+e2e
