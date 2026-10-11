@@ -7,7 +7,7 @@ const RECOMMENDATIONS_STALE_TIME_MS = 5 * 60_000;
 
 export const RECOMMENDATIONS_LIMIT = 3;
 
-export const recommendationKeys = {
+const recommendationKeys = {
   all: ["recommendations"] as const,
   list: (limit: number) => ["recommendations", limit] as const,
 };

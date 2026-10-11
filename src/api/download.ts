@@ -12,7 +12,7 @@ export function filenameFromDisposition(header: string | null, fallback: string)
   }
 }
 
-export function saveBlob(blob: Blob, filename: string): void {
+function saveBlob(blob: Blob, filename: string): void {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;

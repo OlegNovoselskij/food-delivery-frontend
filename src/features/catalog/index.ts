@@ -1,1 +1,1 @@
-export { catalogKeys, categoriesQuery } from "./api";
+export { categoriesQuery } from "./api";

@@ -319,7 +319,7 @@ export const SCREENS: readonly ScreenSpec[] = [
     name: "learning-states",
     path: "/learning",
     tokenFor: studentWithEveryStatus,
-    waitFor: (page) => page.getByRole("heading", { name: "Marketing Analytics 101" }),
+    waitFor: (page) => page.getByRole("heading", { name: "Marketing Analytics 101" }).first(),
   },
   {
     name: "learning-empty",
@@ -502,13 +502,13 @@ export const SCREENS: readonly ScreenSpec[] = [
   {
     name: "studio-builder-empty",
     path: async () => `/studio/courses/${(await emptyDraft()).courseId}`,
-    signedInAs: SEED_USERS.teacher,
+    signedInAs: SEED_USERS.scratchTeacher,
     waitFor: (page) => page.getByText("No modules yet"),
   },
   {
     name: "studio-builder-add-lesson",
     path: async () => `/studio/courses/${(await draftWithModule()).courseId}`,
-    signedInAs: SEED_USERS.teacher,
+    signedInAs: SEED_USERS.scratchTeacher,
     prepare: async (page) => {
       await page.getByRole("button", { name: "Add lesson to First module" }).click();
       await page.getByLabel("Lesson title").fill("Introduction");

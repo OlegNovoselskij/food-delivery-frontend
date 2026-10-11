@@ -9,7 +9,7 @@ import { toCoursesQuery, type CatalogFilters } from "./search-params";
 const CATALOG_STALE_TIME_MS = 60_000;
 const CATEGORIES_STALE_TIME_MS = 5 * 60_000;
 
-export const catalogKeys = {
+const catalogKeys = {
   all: rootKeys.catalog,
   categories: [...rootKeys.catalog, "categories"] as const,
   list: (filters: CatalogFilters) => [...rootKeys.catalog, "list", filters] as const,

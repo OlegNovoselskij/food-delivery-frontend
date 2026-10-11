@@ -7,7 +7,7 @@ const NAME_MAX_LENGTH = 50;
 
 const utf8Length = (value: string): number => new TextEncoder().encode(value).length;
 
-export const emailSchema = z
+const emailSchema = z
   .string()
   .trim()
   .min(1, "Enter your email")

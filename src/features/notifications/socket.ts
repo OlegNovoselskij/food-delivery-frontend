@@ -26,7 +26,7 @@ export interface ReconnectingSocketOptions {
   random?: () => number;
 }
 
-export const DEFAULT_BACKOFF: BackoffOptions = {
+const DEFAULT_BACKOFF: BackoffOptions = {
   initialDelayMs: 1000,
   maxDelayMs: 30_000,
   jitterRatio: 0.3,

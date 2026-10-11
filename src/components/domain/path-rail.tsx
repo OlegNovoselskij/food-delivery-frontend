@@ -62,18 +62,14 @@ function NodeText({ node }: { node: PathNode }) {
           node.state === "current"
             ? "font-semibold text-ink"
             : muted
-              ? "text-faint"
+              ? "text-muted"
               : "text-ink-soft",
         )}
       >
         {node.title}
         <span className="sr-only">. {STATE_LABELS[node.state]}</span>
       </span>
-      {node.meta ? (
-        <span className={cn("block text-small", muted ? "text-faint" : "text-muted")}>
-          {node.meta}
-        </span>
-      ) : null}
+      {node.meta ? <span className={cn("block text-small", "text-muted")}>{node.meta}</span> : null}
     </span>
   );
 }

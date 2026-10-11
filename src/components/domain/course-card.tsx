@@ -12,13 +12,14 @@ import { RatingBadge } from "./rating";
 interface CourseCardProps {
   course: CourseListItem;
   onPrefetch?: (courseId: number) => void;
+  priority?: boolean | undefined;
 }
 
 function moduleCountLabel(count: number): string {
   return count === 1 ? "1 module" : `${count} modules`;
 }
 
-export function CourseCard({ course, onPrefetch }: CourseCardProps) {
+export function CourseCard({ course, onPrefetch, priority }: CourseCardProps) {
   const href = `/courses/${course.id}`;
   const prefetch = () => {
     onPrefetch?.(course.id);
@@ -31,6 +32,7 @@ export function CourseCard({ course, onPrefetch }: CourseCardProps) {
           courseId={course.id}
           title={course.title}
           coverUrl={course.cover_url}
+          priority={priority}
           className="h-[148px]"
         />
       </Link>

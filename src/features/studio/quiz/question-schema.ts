@@ -18,13 +18,13 @@ export const QUESTION_TYPES = [
 
 export type QuestionType = (typeof QUESTION_TYPES)[number]["value"];
 
-export const QUESTION_TEXT_MAX_LENGTH = 5000;
-export const OPTION_TEXT_MAX_LENGTH = 500;
-export const EXPLANATION_MAX_LENGTH = 2000;
-export const MIN_OPTIONS = 2;
+const QUESTION_TEXT_MAX_LENGTH = 5000;
+const OPTION_TEXT_MAX_LENGTH = 500;
+const EXPLANATION_MAX_LENGTH = 2000;
+const MIN_OPTIONS = 2;
 export const MAX_OPTIONS = 10;
-export const MAX_POINTS = 100;
-export const DEFAULT_POINTS = 1;
+const MAX_POINTS = 100;
+const DEFAULT_POINTS = 1;
 
 export function isQuestionType(value: string): value is QuestionType {
   return QUESTION_TYPES.some((type) => type.value === value);

@@ -7,10 +7,10 @@ import { unwrap } from "@/api/unwrap";
 import type { StudentFilters } from "./student-filters";
 
 export const STUDENTS_PAGE_SIZE = 10;
-export const HARDEST_QUESTIONS_LIMIT = 10;
+const HARDEST_QUESTIONS_LIMIT = 10;
 export const MIN_ANSWERS_FOR_DIFFICULTY = 3;
 
-export const analyticsKeys = {
+const analyticsKeys = {
   all: ["studio", "analytics"] as const,
   funnel: (courseId: number) => ["studio", "analytics", courseId, "funnel"] as const,
   quizzes: (courseId: number) => ["studio", "analytics", courseId, "quizzes"] as const,

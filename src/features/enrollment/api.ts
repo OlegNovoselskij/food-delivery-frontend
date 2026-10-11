@@ -10,14 +10,6 @@ export const enrollmentKeys = {
   forCourse: (courseId: number) => ["enrollments", "course", courseId] as const,
 };
 
-export function myEnrollmentsQuery() {
-  return queryOptions({
-    queryKey: enrollmentKeys.mine,
-    queryFn: () => unwrap(api.GET("/api/v1/enrollments/mine", { params: { query: {} } })),
-    staleTime: 0,
-  });
-}
-
 export function courseEnrollmentQuery(courseId: number, enabled: boolean) {
   return queryOptions({
     queryKey: enrollmentKeys.forCourse(courseId),

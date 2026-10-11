@@ -8,7 +8,7 @@ import type { Period } from "./range";
 
 export const TOP_TEACHERS_LIMIT = 5;
 export const COURSE_PREVIEW_LIMIT = 5;
-export const BREAKDOWN_LIMIT = 8;
+const BREAKDOWN_LIMIT = 8;
 export const FULL_TABLE_LIMIT = 100;
 
 export const BREAKDOWN_DIMENSIONS = ["course", "teacher", "category"] as const;
@@ -19,7 +19,7 @@ export type BreakdownDimension = (typeof BREAKDOWN_DIMENSIONS)[number];
 export type CourseSort = (typeof COURSE_SORTS)[number];
 export type TeacherSort = (typeof TEACHER_SORTS)[number];
 
-export const adminKeys = {
+const adminKeys = {
   all: ["admin"] as const,
   overview: ["admin", "overview"] as const,
   revenue: (period: Period) => ["admin", "revenue", period] as const,

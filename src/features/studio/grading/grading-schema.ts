@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import type { AnswerReview, AttemptReviewRequest } from "@/api/types";
 
-export const COMMENT_MAX_LENGTH = 2000;
+const COMMENT_MAX_LENGTH = 2000;
 
 export interface GradingFormValues {
   grades: { points: string; comment: string }[];

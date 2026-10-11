@@ -11,7 +11,7 @@ function stringField(payload: Notification["payload"], key: string): string | nu
   return typeof value === "string" ? value : null;
 }
 
-export const CERTIFICATES_PATH = "/certificates";
+const CERTIFICATES_PATH = "/certificates";
 
 export function notificationTarget(notification: Notification): string | null {
   const { payload } = notification;

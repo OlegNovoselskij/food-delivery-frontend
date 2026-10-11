@@ -2,10 +2,10 @@ import { z } from "zod";
 
 import type { QuizManage } from "@/api/types";
 
-export const TITLE_MAX_LENGTH = 200;
+const TITLE_MAX_LENGTH = 200;
 export const MIN_PASSING_SCORE = 1;
 export const MAX_PASSING_SCORE = 100;
-export const DEFAULT_PASSING_SCORE = 60;
+const DEFAULT_PASSING_SCORE = 60;
 export const MAX_ATTEMPTS_LIMIT = 20;
 
 const wholeNumberIn = (min: number, max: number) => (value: string) =>

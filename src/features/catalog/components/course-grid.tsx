@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const SKELETON_CARDS = 6;
+const PRIORITY_CARDS = 3;
 const GRID_CLASS = "grid gap-5 sm:grid-cols-2 lg:grid-cols-3";
 
 export function CourseGridSkeleton() {
@@ -64,9 +65,9 @@ export function CourseGrid({
 
   return (
     <ul className={GRID_CLASS}>
-      {courses.map((course) => (
+      {courses.map((course, index) => (
         <li key={course.id} className="flex">
-          <CourseCard course={course} onPrefetch={onPrefetch} />
+          <CourseCard course={course} onPrefetch={onPrefetch} priority={index < PRIORITY_CARDS} />
         </li>
       ))}
     </ul>

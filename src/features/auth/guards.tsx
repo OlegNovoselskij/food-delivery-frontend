@@ -5,7 +5,7 @@ import { safeNextPath, signInPathFor } from "@/lib/safe-redirect";
 import { useAuth } from "./auth-provider";
 import { isRole, roleHome, type Role } from "./roles";
 
-export const FORBIDDEN_PATH = "/403";
+const FORBIDDEN_PATH = "/403";
 
 export function RequireAuth() {
   const { session } = useAuth();

@@ -69,7 +69,7 @@ function OwnReview({ courseId, review }: { courseId: number; review: Review }) {
       <div className="flex flex-wrap items-center gap-3">
         <Badge>Your review</Badge>
         <StarRow value={review.rating} />
-        <time dateTime={review.created_at} className="text-small text-muted">
+        <time dateTime={review.created_at} className="text-small text-ink-soft">
           {formatDate(review.created_at)}
         </time>
       </div>

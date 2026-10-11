@@ -63,11 +63,7 @@ async function authorizedJson(
   });
 }
 
-export async function uploadLessonVideo(
-  token: string,
-  lessonId: number,
-  filePath: string,
-): Promise<void> {
+async function uploadLessonVideo(token: string, lessonId: number, filePath: string): Promise<void> {
   const size = statSync(filePath).size;
   const instructionsResponse = await authorizedJson(
     `/lessons/${lessonId}/video/upload-url`,

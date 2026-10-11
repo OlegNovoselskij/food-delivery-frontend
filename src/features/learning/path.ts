@@ -88,7 +88,7 @@ export function buildPath(input: PathInput): PathModuleView[] {
   });
 }
 
-export function orderedProgramLessons(program: Program): LessonSummary[] {
+function orderedProgramLessons(program: Program): LessonSummary[] {
   return program.modules.flatMap((module) => module.lessons);
 }
 

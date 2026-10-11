@@ -37,6 +37,7 @@ export default tseslint.config(
     plugins: { "import-x": importX },
     rules: {
       "no-console": "error",
+      "jsx-a11y/no-noninteractive-tabindex": ["error", { roles: ["tabpanel", "region"] }],
       "no-restricted-syntax": [
         "error",
         {

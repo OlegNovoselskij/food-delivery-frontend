@@ -16,7 +16,7 @@ import { NotificationsContext } from "./context";
 
 const POLL_INTERVAL_MS = 60_000;
 
-export function useSocketStatus() {
+function useSocketStatus() {
   return useContext(NotificationsContext).status;
 }
 

@@ -23,7 +23,7 @@ export interface Period {
   group_by: GroupBy;
 }
 
-export function isRangeValue(value: string | null): value is RangeValue {
+function isRangeValue(value: string | null): value is RangeValue {
   return RANGES.some((range) => range.value === value);
 }
 

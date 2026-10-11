@@ -9,11 +9,27 @@
     />
     <meta name="theme-color" content="#f5f6fa" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script src="/theme-init.js"></script>
+    <script>(function(){var p="system";try{p=window.localStorage.getItem("atrium.theme")||"system"}catch(e){}var d=p==="dark"||(p==="system"&&window.matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.dataset.theme=d?"dark":"light"})();</script>
     <title>Atrium</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div aria-hidden="true" data-app-shell>
+        <div
+          class="flex h-[68px] items-center border-b border-line bg-surface px-6 text-h3 font-bold"
+        >
+          Atrium
+        </div>
+        <div class="container-page py-10">
+          <p class="max-w-3xl text-display font-bold">Courses taught by people who do the work</p>
+          <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="h-64 rounded-card bg-sunken"></div>
+            <div class="h-64 rounded-card bg-sunken"></div>
+            <div class="hidden h-64 rounded-card bg-sunken lg:block"></div>
+          </div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

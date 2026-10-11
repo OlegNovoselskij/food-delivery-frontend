@@ -1,10 +1,8 @@
-export const COURSE_STATUS = {
+const COURSE_STATUS = {
   draft: "draft",
   published: "published",
   archived: "archived",
 } as const;
-
-export type CourseStatus = (typeof COURSE_STATUS)[keyof typeof COURSE_STATUS];
 
 type BadgeTone = "brand" | "neutral" | "success" | "warning" | "danger" | "amber";
 

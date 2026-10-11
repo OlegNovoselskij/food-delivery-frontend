@@ -10,7 +10,7 @@ interface ReportTableProps {
 
 export function ReportTable({ label, compact = false, children }: ReportTableProps) {
   return (
-    <div className="-mx-1 overflow-x-auto px-1">
+    <div role="region" aria-label={label} tabIndex={0} className="-mx-1 overflow-x-auto px-1">
       <table
         aria-label={label}
         className={cn("w-full border-collapse text-left", !compact && "min-w-[34rem]")}

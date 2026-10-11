@@ -1,10 +1,10 @@
 import { z } from "zod";
 
-export const PAYMENT_METHODS = ["card", "paypal"] as const;
+const PAYMENT_METHODS = ["card", "paypal"] as const;
 
 export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
 
-export const PAYPAL_TOKEN = "tok_paypal";
+const PAYPAL_TOKEN = "tok_paypal";
 export const SUCCESS_TEST_CARD = "4242 4242 4242 4242";
 export const DECLINED_TEST_CARD = "4000 0000 0000 0002";
 
@@ -18,7 +18,7 @@ const EXPIRY_PATTERN = /^(0[1-9]|1[0-2])\/(\d{2})$/;
 const CVC_PATTERN = /^\d{3,4}$/;
 const CENTURY = 2000;
 
-export function digitsOf(value: string): string {
+function digitsOf(value: string): string {
   return value.replace(NON_DIGITS, "");
 }
 

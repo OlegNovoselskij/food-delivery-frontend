@@ -61,7 +61,7 @@ interface CourseCoverProps {
   title: string;
   coverUrl: string | null;
   className?: string;
-  priority?: boolean;
+  priority?: boolean | undefined;
 }
 
 export function CourseCover({ courseId, title, coverUrl, className, priority }: CourseCoverProps) {
@@ -73,6 +73,7 @@ export function CourseCover({ courseId, title, coverUrl, className, priority }: 
         src={coverUrl}
         alt=""
         loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
         onError={() => {
           setImageFailed(true);
         }}
@@ -96,7 +97,7 @@ export function CourseCover({ courseId, title, coverUrl, className, priority }: 
         )}
       />
       <span className={cn("absolute aspect-square", palette.small, SMALL_SHAPE[palette.shape])} />
-      <span className="absolute bottom-3 left-3.5 z-10 text-small font-bold tracking-tight text-on-night opacity-95">
+      <span className="absolute bottom-3 left-3.5 z-10 rounded-md bg-night px-2 py-0.5 text-small font-bold tracking-tight text-on-night">
         {coverLabel(title)}
       </span>
     </div>

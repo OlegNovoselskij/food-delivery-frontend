@@ -1,4 +1,4 @@
-export const NO_DATA = "No data";
+const NO_DATA = "No data";
 
 export function percentText(value: number | null): string {
   return value === null ? NO_DATA : `${Math.round(value)}%`;

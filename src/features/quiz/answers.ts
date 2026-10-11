@@ -6,8 +6,6 @@ export const QUESTION_TYPES = {
   text: "open_text",
 } as const;
 
-export type QuestionKind = (typeof QUESTION_TYPES)[keyof typeof QUESTION_TYPES];
-
 export interface DraftAnswer {
   optionIds: number[];
   text: string;
@@ -15,13 +13,7 @@ export interface DraftAnswer {
 
 export type DraftAnswers = Record<number, DraftAnswer>;
 
-export const EMPTY_ANSWER: DraftAnswer = { optionIds: [], text: "" };
-
-const KINDS: readonly string[] = Object.values(QUESTION_TYPES);
-
-export function isQuestionKind(value: string): value is QuestionKind {
-  return KINDS.includes(value);
-}
+const EMPTY_ANSWER: DraftAnswer = { optionIds: [], text: "" };
 
 export function isAnswered(question: QuestionPublic, answer: DraftAnswer | undefined): boolean {
   if (answer === undefined) return false;

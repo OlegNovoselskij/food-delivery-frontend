@@ -10,7 +10,7 @@ One line per decision where the docs were silent.
 - `tailwind-merge` is configured with the custom font size tokens (`text-body`, `text-small`, and so on), otherwise it drops text colors that sit next to them.
 - The API client throws a normalized `ApiError` from a response middleware, so every query and mutation fails through one path.
 - The root layout focuses the page `h1` after each navigation, and renders a skip link.
-- The theme is `system`, `light` or `dark`, stored in `localStorage`, and applied before first paint by `public/theme-init.js` because the CSP forbids inline scripts.
+- The theme is `system`, `light` or `dark`, stored in `localStorage`, and applied before first paint by a one-line inline script in `index.html`, allowed by its sha256 in the CSP (a test keeps the two in sync); an external script was render-blocking in Lighthouse.
 - Pages are lazy route modules that export a named `Component`, so there are no default exports in the app.
 - The nginx image reads `API_ORIGIN`, `API_WS_ORIGIN` and `STORAGE_ORIGIN` at container start to build the CSP.
 - Tokens `success-ink`, `danger-ink` and `warning-ink` (with dark overrides) are added for text because `*-600` fails 4.5:1 as small text; `*-600` stays for icons and borders.
@@ -39,3 +39,6 @@ One line per decision where the docs were silent.
 - The backend admin panel link opens `/admin` on the API origin in a new tab.
 - Recommendations are requested only for signed-in users because the API answers 401 to visitors; the catalog shows them only without filters on the first page, and the section hides itself when the list is empty.
 - The theme choice (system, light, dark) is in the account menu for signed-in users and in a small theme menu in the top bar for visitors; it is stored in `localStorage` and applied before first paint.
+- Scrollable table wrappers are focusable regions so keyboard users can scroll them; the lint rule allows the region role for that.
+- Muted text is #62677e (was #6a6f86 in the design tokens) so it keeps 4.5:1 on the sunken and tinted backgrounds; the generated cover label sits on a solid dark pill for the same reason.
+- `index.html` carries a static first-paint shell (top bar and hero text) that React replaces on mount, so first contentful paint does not wait for the JavaScript bundle.

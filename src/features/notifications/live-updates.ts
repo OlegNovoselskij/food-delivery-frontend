@@ -27,7 +27,7 @@ function isFirstPageOfAll(queryKey: readonly unknown[]): boolean {
   return isNotificationFilter(filter) && filter.page === 1 && !filter.unread;
 }
 
-export function applyIncomingNotification(
+function applyIncomingNotification(
   queryClient: QueryClient,
   notification: Notification,
   openTarget: (path: string) => void,

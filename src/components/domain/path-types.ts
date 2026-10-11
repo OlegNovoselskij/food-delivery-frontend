@@ -1,6 +1,6 @@
 export type PathNodeState = "done" | "current" | "upcoming" | "locked";
 
-export interface PathLessonNode {
+interface PathLessonNode {
   kind: "lesson";
   id: number;
   title: string;
@@ -9,7 +9,7 @@ export interface PathLessonNode {
   href: string | null;
 }
 
-export interface PathQuizNode {
+interface PathQuizNode {
   kind: "quiz";
   id: number | null;
   title: string;
