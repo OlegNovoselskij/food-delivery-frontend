@@ -3,7 +3,9 @@ import { Users } from "lucide-react";
 import { useCallback, useMemo } from "react";
 import { useSearchParams } from "react-router";
 
+import { ExportButton } from "@/components/domain/export-button";
 import { ProgressTrack } from "@/components/domain/progress-track";
+import { ReportTable, Td, Th } from "@/components/domain/report-table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -29,8 +31,7 @@ import {
   toStudentSearchParams,
   type StudentFilters,
 } from "../student-filters";
-import { ExportButton, ReportSection } from "./report-section";
-import { ReportTable, Td, Th } from "./report-table";
+import { ReportSection } from "./report-section";
 
 const ANY = "any";
 const STATUS_LABELS = { active: "In progress", completed: "Completed" } as const;

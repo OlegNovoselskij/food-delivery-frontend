@@ -14,7 +14,12 @@ const TEACHER_NAV: readonly NavItem[] = [
   { to: "/studio", label: "Teaching", end: true },
   { to: "/studio/grading", label: "Grading", end: false },
 ];
-const ADMIN_NAV: readonly NavItem[] = [];
+const ADMIN_NAV: readonly NavItem[] = [
+  { to: "/admin", label: "Overview", end: true },
+  { to: "/admin/courses", label: "Courses" },
+  { to: "/admin/teachers", label: "Teachers" },
+  { to: "/admin/categories", label: "Categories" },
+];
 
 export function mainNavFor(session: Session): readonly NavItem[] {
   if (session.status !== "authenticated") return PUBLIC_NAV;

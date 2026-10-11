@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { CircleHelp } from "lucide-react";
 
+import { ExportButton } from "@/components/domain/export-button";
+import { ReportTable, Td, Th } from "@/components/domain/report-table";
 import { Badge } from "@/components/ui/badge";
 
 import { exportReportCsv, quizStatsQuery } from "../api";
 import { percentText } from "../format";
 import { NO_STUDENT_FILTERS } from "../student-filters";
-import { ExportButton, ReportSection } from "./report-section";
-import { ReportTable, Td, Th } from "./report-table";
+import { ReportSection } from "./report-section";
 
 export function QuizzesSection({ courseId }: { courseId: number }) {
   const quizzes = useQuery(quizStatsQuery(courseId));

@@ -31,3 +31,9 @@ One line per decision where the docs were silent.
 - Written-answer grading lives at `/studio/grading` and `/studio/grading/:attemptId`; the form lists only answers with `needs_review` and requires whole points from 0 to the question's points.
 - `/studio/analytics` is not a separate page: the Teaching dashboard already shows the teacher report, so each course row links to its own analytics page.
 - Analytics sections load independently so one failing report does not hide the others; student filters and page live in the address.
+- The admin range switch (30 days, 90 days, 12 months) lives in the address (`?range=`) and sets both the date range and the grouping (day, week, month) for every report on the page.
+- The overview API has no period, so the revenue KPI sums the period's revenue series and the other KPIs show all-time counts; no trend percentages are shown because the API does not provide a previous period.
+- Completion rate is completed enrollments divided by active plus completed enrollments, since pending and cancelled ones never started.
+- Every chart has a text summary, an image role labelled by that summary, and a "View as table" toggle; chart animation is off so charts render the same for everyone and in screenshots.
+- Category deletion relies on the API's 409 for categories that still have courses and shows its message.
+- The backend admin panel link opens `/admin` on the API origin in a new tab.

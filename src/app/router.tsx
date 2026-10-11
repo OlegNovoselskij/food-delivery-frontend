@@ -107,6 +107,27 @@ export const routes: RouteObject[] = [
                 ],
               },
               {
+                element: <RequireRole roles={["admin"]} />,
+                children: [
+                  {
+                    path: "admin",
+                    lazy: () => import("@/features/admin/pages/admin-overview-page"),
+                  },
+                  {
+                    path: "admin/courses",
+                    lazy: () => import("@/features/admin/pages/admin-courses-page"),
+                  },
+                  {
+                    path: "admin/teachers",
+                    lazy: () => import("@/features/admin/pages/admin-teachers-page"),
+                  },
+                  {
+                    path: "admin/categories",
+                    lazy: () => import("@/features/admin/pages/admin-categories-page"),
+                  },
+                ],
+              },
+              {
                 element: <RequireRole roles={["teacher", "admin"]} />,
                 children: [
                   {

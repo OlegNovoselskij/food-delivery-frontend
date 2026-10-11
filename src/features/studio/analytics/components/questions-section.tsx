@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { Flame } from "lucide-react";
 
+import { ExportButton } from "@/components/domain/export-button";
+import { ReportTable, Td, Th } from "@/components/domain/report-table";
 import { Badge } from "@/components/ui/badge";
 
 import { MIN_ANSWERS_FOR_DIFFICULTY, exportReportCsv, questionStatsQuery } from "../api";
 import { percentText } from "../format";
 import { NO_STUDENT_FILTERS } from "../student-filters";
-import { ExportButton, ReportSection } from "./report-section";
-import { ReportTable, Td, Th } from "./report-table";
+import { ReportSection } from "./report-section";
 
 const HARD_BELOW_PERCENT = 50;
 

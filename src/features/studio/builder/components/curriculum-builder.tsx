@@ -16,12 +16,12 @@ import { LayoutList, Plus } from "lucide-react";
 import { useState } from "react";
 
 import type { Program } from "@/api/types";
+import { InlineTitleForm } from "@/components/domain/inline-title-form";
 import { EmptyState } from "@/components/feedback/empty-state";
 import { Button } from "@/components/ui/button";
 
 import { useAddModule, useReorderModules } from "../hooks";
 import { moveId } from "../program-model";
-import { InlineTitleForm } from "./inline-title-form";
 import { ModuleCard } from "./module-card";
 
 const POINTER_DISTANCE_PX = 6;

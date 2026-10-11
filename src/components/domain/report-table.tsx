@@ -4,13 +4,17 @@ import { cn } from "@/lib/cn";
 
 interface ReportTableProps {
   label: string;
+  compact?: boolean;
   children: ReactNode;
 }
 
-export function ReportTable({ label, children }: ReportTableProps) {
+export function ReportTable({ label, compact = false, children }: ReportTableProps) {
   return (
     <div className="-mx-1 overflow-x-auto px-1">
-      <table aria-label={label} className="w-full min-w-[34rem] border-collapse text-left">
+      <table
+        aria-label={label}
+        className={cn("w-full border-collapse text-left", !compact && "min-w-[34rem]")}
+      >
         {children}
       </table>
     </div>

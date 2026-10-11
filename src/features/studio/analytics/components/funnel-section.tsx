@@ -2,12 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { ListChecks } from "lucide-react";
 
 import type { FunnelRow } from "@/api/types";
+import { ExportButton } from "@/components/domain/export-button";
 import { Badge } from "@/components/ui/badge";
 
 import { exportReportCsv, funnelQuery } from "../api";
 import { percentText } from "../format";
 import { NO_STUDENT_FILTERS } from "../student-filters";
-import { ExportButton, ReportSection } from "./report-section";
+import { ReportSection } from "./report-section";
 
 const PERCENT = 100;
 

@@ -16,6 +16,7 @@ import { ChevronDown, CircleHelp, Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 import type { ProgramModule } from "@/api/types";
+import { InlineTitleForm } from "@/components/domain/inline-title-form";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
 
@@ -24,7 +25,6 @@ import { defaultQuizValues, toQuizPayload } from "../../quiz/quiz-schema";
 import { useAddLesson, useDeleteModule, useRenameModule, useReorderLessons } from "../hooks";
 import { moveId } from "../program-model";
 import { AddLessonForm } from "./add-lesson-form";
-import { InlineTitleForm } from "./inline-title-form";
 import { LessonRow, QuizRow } from "./lesson-row";
 import { SortableItem } from "./sortable-item";
 

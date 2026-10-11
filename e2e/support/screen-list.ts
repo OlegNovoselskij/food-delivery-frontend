@@ -570,4 +570,43 @@ export const SCREENS: readonly ScreenSpec[] = [
     signedInAs: SEED_USERS.scratchTeacher,
     waitFor: (page) => page.getByText("No students yet"),
   },
+  {
+    name: "admin-overview",
+    path: "/admin",
+    signedInAs: SEED_USERS.admin,
+    waitFor: (page) => page.getByRole("table", { name: "Courses" }),
+  },
+  {
+    name: "admin-overview-30d",
+    path: "/admin?range=30d",
+    signedInAs: SEED_USERS.admin,
+    waitFor: (page) => page.getByRole("table", { name: "Courses" }),
+  },
+  {
+    name: "admin-overview-table",
+    path: "/admin",
+    signedInAs: SEED_USERS.admin,
+    prepare: async (page) => {
+      await page.getByRole("button", { name: "View as table" }).first().click();
+    },
+    waitFor: (page) => page.getByRole("table", { name: "Revenue over time" }),
+  },
+  {
+    name: "admin-courses",
+    path: "/admin/courses",
+    signedInAs: SEED_USERS.admin,
+    waitFor: (page) => page.getByRole("table", { name: "Courses" }),
+  },
+  {
+    name: "admin-teachers",
+    path: "/admin/teachers",
+    signedInAs: SEED_USERS.admin,
+    waitFor: (page) => page.getByRole("table", { name: "Teachers" }),
+  },
+  {
+    name: "admin-categories",
+    path: "/admin/categories",
+    signedInAs: SEED_USERS.admin,
+    waitFor: (page) => page.getByRole("list", { name: "Categories" }),
+  },
 ];
