@@ -1,0 +1,181 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Catalog</title><style>:root {
+  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #14172b;
+  --color-ink-soft: #3a3f58;
+  --color-muted: #6a6f86;
+  --color-faint: #9a9fb3;
+
+  --color-paper: #f5f6fa;
+  --color-surface: #ffffff;
+  --color-sunken: #eceef5;
+  --color-line: #e3e5ee;
+  --color-line-strong: #cfd2e0;
+
+  --color-brand-50: #eef0fe;
+  --color-brand-100: #dfe3fd;
+  --color-brand-200: #c3c9fa;
+  --color-brand-500: #5560ea;
+  --color-brand-600: #3b47e0;
+  --color-brand-700: #2e38bf;
+  --color-brand-900: #1c2275;
+
+  --color-amber-400: #f7c04a;
+  --color-amber-500: #f2b01e;
+  --color-amber-50: #fff6de;
+
+  --color-success-50: #e3f6f0;
+  --color-success-600: #139a7b;
+  --color-danger-50: #fde8ec;
+  --color-danger-600: #d6455d;
+  --color-warning-50: #fdf0dc;
+  --color-warning-600: #c9741a;
+
+  --radius-control: 10px;
+  --radius-card: 14px;
+  --radius-panel: 20px;
+
+  --shadow-pop: 0 12px 32px -12px rgb(20 23 43 / 0.28);
+  --shadow-focus: 0 0 0 3px rgb(59 71 224 / 0.28);
+
+  --text-display: 2.5rem;
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.03em;
+  --text-h1: 1.875rem;
+  --text-h1--line-height: 1.15;
+  --text-h1--letter-spacing: -0.025em;
+  --text-h2: 1.375rem;
+  --text-h2--line-height: 1.25;
+  --text-h2--letter-spacing: -0.018em;
+  --text-h3: 1.0625rem;
+  --text-h3--line-height: 1.35;
+  --text-h3--letter-spacing: -0.01em;
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.55;
+  --text-small: 0.8125rem;
+  --text-small--line-height: 1.45;
+  --text-micro: 0.75rem;
+  --text-micro--line-height: 1.35;
+}
+
+:root[data-theme="dark"] {
+  --color-ink: #eef0fb;
+  --color-ink-soft: #c9cde2;
+  --color-muted: #9298b4;
+  --color-faint: #666c88;
+  --color-paper: #0f1120;
+  --color-surface: #171a2e;
+  --color-sunken: #1e2238;
+  --color-line: #272b45;
+  --color-line-strong: #363b5c;
+  --color-brand-50: #1f2352;
+  --color-brand-100: #272d6e;
+  --color-brand-200: #3a42a0;
+  --color-brand-500: #7681ff;
+  --color-brand-600: #8791ff;
+  --color-brand-700: #a3abff;
+  --color-brand-900: #dfe2ff;
+  --color-amber-50: #3a2f10;
+  --color-success-50: #11332b;
+  --color-danger-50: #3b1822;
+  --color-warning-50: #3a2a12;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-sans);font-size:15px;line-height:1.55;color:var(--color-ink);background:var(--color-paper);font-optical-sizing:auto;font-feature-settings:"cv11","ss03"}
+h1,h2,h3,h4{font-weight:650;letter-spacing:-.02em;line-height:1.2}
+a{color:inherit;text-decoration:none}
+.ic{flex:none}
+.row{display:flex;align-items:center}
+.col{display:flex;flex-direction:column}
+.gap4{gap:4px}.gap8{gap:8px}.gap12{gap:12px}.gap16{gap:16px}.gap24{gap:24px}
+.muted{color:var(--color-muted)}.small{font-size:13px}.micro{font-size:12px}
+.grow{flex:1}.sp{justify-content:space-between}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 16px;border-radius:var(--radius-control);font-weight:600;font-size:14px;border:1px solid transparent;background:var(--color-brand-600);color:#fff;cursor:pointer;white-space:nowrap}
+.btn.sm{height:32px;padding:0 12px;font-size:13px}
+.btn.lg{height:48px;padding:0 22px;font-size:15px}
+.btn.secondary{background:var(--color-surface);color:var(--color-ink);border-color:var(--color-line-strong)}
+.btn.ghost{background:transparent;color:var(--color-ink-soft)}
+.btn.block{width:100%}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px;border-radius:999px;background:var(--color-surface);border:1px solid var(--color-line);font-size:13px;font-weight:500;color:var(--color-ink-soft)}
+.chip.on{background:var(--color-ink);border-color:var(--color-ink);color:#fff}
+.col>.badge{align-self:flex-start}
+.badge{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:6px;font-size:12px;font-weight:600;background:var(--color-sunken);color:var(--color-ink-soft)}
+.badge.brand{background:var(--color-brand-50);color:var(--color-brand-700)}
+.badge.ok{background:var(--color-success-50);color:var(--color-success-600)}
+.badge.warn{background:var(--color-warning-50);color:var(--color-warning-600)}
+.badge.bad{background:var(--color-danger-50);color:var(--color-danger-600)}
+.badge.amber{background:var(--color-amber-50);color:#8a6200}
+.card{background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-card)}
+.input{height:44px;border-radius:var(--radius-control);border:1px solid var(--color-line-strong);background:var(--color-surface);padding:0 14px;display:flex;align-items:center;gap:10px;color:var(--color-muted);font-size:14.5px}
+.label{font-size:13px;font-weight:600;color:var(--color-ink-soft);margin-bottom:6px}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--color-brand-100);color:var(--color-brand-700);display:grid;place-items:center;font-weight:650;font-size:13px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.03em}
+.logo i{width:26px;height:26px;border-radius:8px;background:var(--color-ink);display:grid;place-items:center}
+.logo i:before{content:"";width:12px;height:12px;border-radius:3px;background:var(--color-amber-500);transform:rotate(45deg)}
+.topbar{height:64px;background:var(--color-surface);border-bottom:1px solid var(--color-line);display:flex;align-items:center;padding:0 32px;gap:32px}
+.topbar nav{display:flex;gap:4px}
+.topbar nav a{padding:8px 12px;border-radius:8px;font-weight:550;font-size:14.5px;color:var(--color-muted)}
+.topbar nav a.on{color:var(--color-ink);background:var(--color-sunken)}
+.iconbtn{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;color:var(--color-ink-soft);position:relative}
+.iconbtn .dot{position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--color-danger-600);border:2px solid var(--color-surface)}
+.track{display:flex;gap:3px;height:6px}
+.track i{flex:1;border-radius:3px;background:var(--color-line-strong)}
+.track i.done{background:var(--color-brand-600)}
+.track i.part{background:linear-gradient(90deg,var(--color-brand-600) var(--p,50%),var(--color-line-strong) var(--p,50%))}
+.cover{position:relative;overflow:hidden;background:var(--c1)}
+.cover:before,.cover:after{content:"";position:absolute;border-radius:50%}
+.cover:before{width:70%;aspect-ratio:1;right:-14%;top:-30%;background:var(--c2)}
+.cover:after{width:46%;aspect-ratio:1;left:-8%;bottom:-34%;background:var(--c3)}
+.cover.sq:before{border-radius:22%;transform:rotate(18deg)}
+.cover.tri:after{border-radius:0;clip-path:polygon(0 100%,100% 100%,50% 0);width:52%;left:14%;bottom:0;background:var(--c3)}
+.cover span{position:absolute;left:14px;bottom:12px;z-index:2;font-weight:700;font-size:13px;color:#fff;letter-spacing:-.01em;opacity:.95}
+.stars{display:inline-flex;gap:1px;color:var(--color-amber-500)}
+.stars .ic{fill:currentColor}
+
+.wrap{max-width:1216px;margin:0 auto;padding:0 32px}
+.hero{padding:44px 0 28px}
+.hero h1{font-size:40px;line-height:1.08;letter-spacing:-.035em;max-width:640px}
+.hero p{max-width:520px;margin-top:12px;color:var(--color-muted);font-size:16px}
+.search{height:52px;border-radius:14px;background:var(--color-surface);border:1px solid var(--color-line-strong);display:flex;align-items:center;gap:12px;padding:0 8px 0 18px;margin-top:24px;max-width:680px;box-shadow:0 1px 0 var(--color-line)}
+.search .t{flex:1;color:var(--color-faint)}
+.filters{display:flex;align-items:center;gap:8px;padding:8px 0 22px;border-bottom:1px solid var(--color-line);flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:28px 0 48px}
+.ccard{overflow:hidden}.cbody{padding:16px 18px 18px}
+.ccard h3{font-size:17px;min-height:46px}
+.amb{color:var(--color-amber-500);fill:currentColor}
+.pager{display:flex;justify-content:center;gap:6px;padding-bottom:56px}
+.pager span{min-width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-weight:600;font-size:14px;border:1px solid var(--color-line);background:var(--color-surface)}
+.pager span.on{background:var(--color-ink);color:#fff;border-color:var(--color-ink)}
+.sel{height:36px;padding:0 12px;border-radius:10px;border:1px solid var(--color-line-strong);background:var(--color-surface);display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:550}
+</style></head><body><header class="topbar"><div class="logo"><i></i>Atrium</div><nav><a class="on">Courses</a><a class="">My learning</a><a class="">Certificates</a></nav><div class="grow"></div>
+    <div class="iconbtn"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div><div class="iconbtn"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 1 1 12 0v5l1.5 2h-15z"/><path d="M10 21h4"/></svg><span class="dot"></span></div><div class="avatar">AK</div></header><div class="wrap"><section class="hero"><h1>Courses taught by people who do the work</h1>
+    <p>Pick a topic, follow the program module by module, and earn a certificate you can verify online.</p>
+    <div class="search"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="t">Search by title, topic or teacher</span><span class="btn">Search</span></div></section>
+    <div class="filters"><span class="chip on">All</span><span class="chip ">Programming</span><span class="chip ">Databases</span><span class="chip ">Design</span><span class="chip ">DevOps</span><span class="chip ">Analytics</span><div class="grow"></div><span class="sel">Free and paid <svg class="ic " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span><span class="sel">Sort: Newest <svg class="ic " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></div>
+    <section class="grid"><article class="card ccard"><div class="cover " style="--c1:#3b47e0;--c2:#f2b01e;--c3:#14172b;height:148px"><span>TypeScript</span></div>
+    <div class="cbody col gap8"><div class="row sp"><span class="badge brand">Programming</span><span class="small muted row gap4"><svg class="ic amb" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>4.8 <span class="muted">(214)</span></span></div>
+    <h3>TypeScript from zero to production</h3><div class="small muted">Olena Marchenko</div>
+    <div class="col gap4" style="margin-top:6px"><div class="track"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="micro muted">6 modules</div></div>
+    <div class="row sp" style="margin-top:8px"><b style="font-size:17px;letter-spacing:-.02em">$89.00</b><span class="btn sm secondary">View course</span></div></div></article><article class="card ccard"><div class="cover sq" style="--c1:#139a7b;--c2:#dfe3fd;--c3:#14172b;height:148px"><span>PostgreSQL</span></div>
+    <div class="cbody col gap8"><div class="row sp"><span class="badge brand">Databases</span><span class="small muted row gap4"><svg class="ic amb" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>4.9 <span class="muted">(168)</span></span></div>
+    <h3>PostgreSQL for application developers</h3><div class="small muted">Taras Bondar</div>
+    <div class="col gap4" style="margin-top:6px"><div class="track"><i></i><i></i><i></i><i></i><i></i></div><div class="micro muted">5 modules</div></div>
+    <div class="row sp" style="margin-top:8px"><b style="font-size:17px;letter-spacing:-.02em">$74.00</b><span class="btn sm secondary">View course</span></div></div></article><article class="card ccard"><div class="cover " style="--c1:#14172b;--c2:#5560ea;--c3:#f2b01e;height:148px"><span>UX research</span></div>
+    <div class="cbody col gap8"><div class="row sp"><span class="badge brand">Design</span><span class="small muted row gap4"><svg class="ic amb" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>4.7 <span class="muted">(131)</span></span></div>
+    <h3>UX research fundamentals</h3><div class="small muted">Iryna Savchuk</div>
+    <div class="col gap4" style="margin-top:6px"><div class="track"><i></i><i></i><i></i><i></i></div><div class="micro muted">4 modules</div></div>
+    <div class="row sp" style="margin-top:8px"><b style="font-size:17px;letter-spacing:-.02em">$59.00</b><span class="btn sm secondary">View course</span></div></div></article><article class="card ccard"><div class="cover sq" style="--c1:#d6455d;--c2:#f7c04a;--c3:#3b47e0;height:148px"><span>Docker</span></div>
+    <div class="cbody col gap8"><div class="row sp"><span class="badge brand">DevOps</span><span class="small muted row gap4"><svg class="ic amb" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>4.8 <span class="muted">(97)</span></span></div>
+    <h3>Practical Docker for backend teams</h3><div class="small muted">Taras Bondar</div>
+    <div class="col gap4" style="margin-top:6px"><div class="track"><i></i><i></i><i></i><i></i><i></i></div><div class="micro muted">5 modules</div></div>
+    <div class="row sp" style="margin-top:8px"><b style="font-size:17px;letter-spacing:-.02em">$69.00</b><span class="btn sm secondary">View course</span></div></div></article><article class="card ccard"><div class="cover tri" style="--c1:#5560ea;--c2:#c3c9fa;--c3:#139a7b;height:148px"><span>Analytics</span></div>
+    <div class="cbody col gap8"><div class="row sp"><span class="badge brand">Analytics</span><span class="small muted row gap4"><svg class="ic amb" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>4.6 <span class="muted">(84)</span></span></div>
+    <h3>Product analytics in practice</h3><div class="small muted">Iryna Savchuk</div>
+    <div class="col gap4" style="margin-top:6px"><div class="track"><i></i><i></i><i></i></div><div class="micro muted">3 modules</div></div>
+    <div class="row sp" style="margin-top:8px"><b style="font-size:17px;letter-spacing:-.02em">Free</b><span class="btn sm secondary">View course</span></div></div></article><article class="card ccard"><div class="cover " style="--c1:#c9741a;--c2:#14172b;--c3:#f7c04a;height:148px"><span>React tests</span></div>
+    <div class="cbody col gap8"><div class="row sp"><span class="badge brand">Programming</span><span class="small muted row gap4"><svg class="ic amb" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>4.8 <span class="muted">(120)</span></span></div>
+    <h3>Testing React applications</h3><div class="small muted">Olena Marchenko</div>
+    <div class="col gap4" style="margin-top:6px"><div class="track"><i></i><i></i><i></i><i></i><i></i></div><div class="micro muted">5 modules</div></div>
+    <div class="row sp" style="margin-top:8px"><b style="font-size:17px;letter-spacing:-.02em">$79.00</b><span class="btn sm secondary">View course</span></div></div></article></section><div class="pager"><span class="on">1</span><span>2</span><span>3</span><span><svg class="ic " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></span></div></div></body></html>

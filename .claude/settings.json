@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "additionalDirectories": ["../backend"],
+    "allow": [
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(node:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git init:*)",
+      "Bash(git branch:*)",
+      "Bash(git checkout:*)",
+      "Bash(git -C ../backend:*)",
+      "Bash(docker compose:*)",
+      "Bash(docker ps:*)",
+      "Bash(curl:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(cat:*)"
+    ],
+    "deny": [
+      "Bash(git push:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git clean:*)",
+      "Bash(docker compose down -v:*)",
+      "Bash(docker volume rm:*)",
+      "Bash(rm -rf /:*)",
+      "Read(../backend/.env)",
+      "Read(./.env.production)"
+    ]
+  }
+}

@@ -1,0 +1,187 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Lesson player</title><style>:root {
+  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #14172b;
+  --color-ink-soft: #3a3f58;
+  --color-muted: #6a6f86;
+  --color-faint: #9a9fb3;
+
+  --color-paper: #f5f6fa;
+  --color-surface: #ffffff;
+  --color-sunken: #eceef5;
+  --color-line: #e3e5ee;
+  --color-line-strong: #cfd2e0;
+
+  --color-brand-50: #eef0fe;
+  --color-brand-100: #dfe3fd;
+  --color-brand-200: #c3c9fa;
+  --color-brand-500: #5560ea;
+  --color-brand-600: #3b47e0;
+  --color-brand-700: #2e38bf;
+  --color-brand-900: #1c2275;
+
+  --color-amber-400: #f7c04a;
+  --color-amber-500: #f2b01e;
+  --color-amber-50: #fff6de;
+
+  --color-success-50: #e3f6f0;
+  --color-success-600: #139a7b;
+  --color-danger-50: #fde8ec;
+  --color-danger-600: #d6455d;
+  --color-warning-50: #fdf0dc;
+  --color-warning-600: #c9741a;
+
+  --radius-control: 10px;
+  --radius-card: 14px;
+  --radius-panel: 20px;
+
+  --shadow-pop: 0 12px 32px -12px rgb(20 23 43 / 0.28);
+  --shadow-focus: 0 0 0 3px rgb(59 71 224 / 0.28);
+
+  --text-display: 2.5rem;
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.03em;
+  --text-h1: 1.875rem;
+  --text-h1--line-height: 1.15;
+  --text-h1--letter-spacing: -0.025em;
+  --text-h2: 1.375rem;
+  --text-h2--line-height: 1.25;
+  --text-h2--letter-spacing: -0.018em;
+  --text-h3: 1.0625rem;
+  --text-h3--line-height: 1.35;
+  --text-h3--letter-spacing: -0.01em;
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.55;
+  --text-small: 0.8125rem;
+  --text-small--line-height: 1.45;
+  --text-micro: 0.75rem;
+  --text-micro--line-height: 1.35;
+}
+
+:root[data-theme="dark"] {
+  --color-ink: #eef0fb;
+  --color-ink-soft: #c9cde2;
+  --color-muted: #9298b4;
+  --color-faint: #666c88;
+  --color-paper: #0f1120;
+  --color-surface: #171a2e;
+  --color-sunken: #1e2238;
+  --color-line: #272b45;
+  --color-line-strong: #363b5c;
+  --color-brand-50: #1f2352;
+  --color-brand-100: #272d6e;
+  --color-brand-200: #3a42a0;
+  --color-brand-500: #7681ff;
+  --color-brand-600: #8791ff;
+  --color-brand-700: #a3abff;
+  --color-brand-900: #dfe2ff;
+  --color-amber-50: #3a2f10;
+  --color-success-50: #11332b;
+  --color-danger-50: #3b1822;
+  --color-warning-50: #3a2a12;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-sans);font-size:15px;line-height:1.55;color:var(--color-ink);background:var(--color-paper);font-optical-sizing:auto;font-feature-settings:"cv11","ss03"}
+h1,h2,h3,h4{font-weight:650;letter-spacing:-.02em;line-height:1.2}
+a{color:inherit;text-decoration:none}
+.ic{flex:none}
+.row{display:flex;align-items:center}
+.col{display:flex;flex-direction:column}
+.gap4{gap:4px}.gap8{gap:8px}.gap12{gap:12px}.gap16{gap:16px}.gap24{gap:24px}
+.muted{color:var(--color-muted)}.small{font-size:13px}.micro{font-size:12px}
+.grow{flex:1}.sp{justify-content:space-between}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 16px;border-radius:var(--radius-control);font-weight:600;font-size:14px;border:1px solid transparent;background:var(--color-brand-600);color:#fff;cursor:pointer;white-space:nowrap}
+.btn.sm{height:32px;padding:0 12px;font-size:13px}
+.btn.lg{height:48px;padding:0 22px;font-size:15px}
+.btn.secondary{background:var(--color-surface);color:var(--color-ink);border-color:var(--color-line-strong)}
+.btn.ghost{background:transparent;color:var(--color-ink-soft)}
+.btn.block{width:100%}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 12px;border-radius:999px;background:var(--color-surface);border:1px solid var(--color-line);font-size:13px;font-weight:500;color:var(--color-ink-soft)}
+.chip.on{background:var(--color-ink);border-color:var(--color-ink);color:#fff}
+.col>.badge{align-self:flex-start}
+.badge{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:6px;font-size:12px;font-weight:600;background:var(--color-sunken);color:var(--color-ink-soft)}
+.badge.brand{background:var(--color-brand-50);color:var(--color-brand-700)}
+.badge.ok{background:var(--color-success-50);color:var(--color-success-600)}
+.badge.warn{background:var(--color-warning-50);color:var(--color-warning-600)}
+.badge.bad{background:var(--color-danger-50);color:var(--color-danger-600)}
+.badge.amber{background:var(--color-amber-50);color:#8a6200}
+.card{background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-card)}
+.input{height:44px;border-radius:var(--radius-control);border:1px solid var(--color-line-strong);background:var(--color-surface);padding:0 14px;display:flex;align-items:center;gap:10px;color:var(--color-muted);font-size:14.5px}
+.label{font-size:13px;font-weight:600;color:var(--color-ink-soft);margin-bottom:6px}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--color-brand-100);color:var(--color-brand-700);display:grid;place-items:center;font-weight:650;font-size:13px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.03em}
+.logo i{width:26px;height:26px;border-radius:8px;background:var(--color-ink);display:grid;place-items:center}
+.logo i:before{content:"";width:12px;height:12px;border-radius:3px;background:var(--color-amber-500);transform:rotate(45deg)}
+.topbar{height:64px;background:var(--color-surface);border-bottom:1px solid var(--color-line);display:flex;align-items:center;padding:0 32px;gap:32px}
+.topbar nav{display:flex;gap:4px}
+.topbar nav a{padding:8px 12px;border-radius:8px;font-weight:550;font-size:14.5px;color:var(--color-muted)}
+.topbar nav a.on{color:var(--color-ink);background:var(--color-sunken)}
+.iconbtn{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;color:var(--color-ink-soft);position:relative}
+.iconbtn .dot{position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--color-danger-600);border:2px solid var(--color-surface)}
+.track{display:flex;gap:3px;height:6px}
+.track i{flex:1;border-radius:3px;background:var(--color-line-strong)}
+.track i.done{background:var(--color-brand-600)}
+.track i.part{background:linear-gradient(90deg,var(--color-brand-600) var(--p,50%),var(--color-line-strong) var(--p,50%))}
+.cover{position:relative;overflow:hidden;background:var(--c1)}
+.cover:before,.cover:after{content:"";position:absolute;border-radius:50%}
+.cover:before{width:70%;aspect-ratio:1;right:-14%;top:-30%;background:var(--c2)}
+.cover:after{width:46%;aspect-ratio:1;left:-8%;bottom:-34%;background:var(--c3)}
+.cover.sq:before{border-radius:22%;transform:rotate(18deg)}
+.cover.tri:after{border-radius:0;clip-path:polygon(0 100%,100% 100%,50% 0);width:52%;left:14%;bottom:0;background:var(--c3)}
+.cover span{position:absolute;left:14px;bottom:12px;z-index:2;font-weight:700;font-size:13px;color:#fff;letter-spacing:-.01em;opacity:.95}
+.stars{display:inline-flex;gap:1px;color:var(--color-amber-500)}
+.stars .ic{fill:currentColor}
+
+body{background:var(--color-paper)}
+.bar{height:60px;background:var(--color-surface);border-bottom:1px solid var(--color-line);display:flex;align-items:center;padding:0 24px;gap:20px}
+.shell{display:grid;grid-template-columns:1fr 380px;height:calc(100vh - 60px)}
+.main{overflow:hidden;padding:24px 32px 0}
+.video{aspect-ratio:16/8.2;border-radius:var(--radius-panel);background:linear-gradient(135deg,#14172b,#242a63 60%,#3b47e0);position:relative;display:grid;place-items:center;overflow:hidden}
+.video:before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;background:rgba(242,176,30,.16);right:-90px;top:-150px}
+.video .pb{width:76px;height:76px;border-radius:50%;background:#fff;color:var(--color-ink);display:grid;place-items:center;position:relative;box-shadow:var(--shadow-pop)}
+.ctrl{position:absolute;left:20px;right:20px;bottom:16px;display:flex;align-items:center;gap:14px;color:#fff;font-size:12.5px}
+.seek{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.3);position:relative}
+.seek:after{content:"";position:absolute;left:0;top:0;bottom:0;width:38%;background:var(--color-amber-500);border-radius:2px}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;padding:22px 0 14px}
+.head h1{font-size:26px;letter-spacing:-.025em}
+.tabs{display:flex;gap:22px;border-bottom:1px solid var(--color-line)}
+.tabs a{padding:10px 0;font-weight:600;color:var(--color-muted);border-bottom:2px solid transparent;margin-bottom:-1px;font-size:14px}
+.tabs a.on{color:var(--color-ink);border-color:var(--color-brand-600)}
+.side{background:var(--color-surface);border-left:1px solid var(--color-line);overflow:hidden;display:flex;flex-direction:column}
+.sh{padding:20px 22px 16px;border-bottom:1px solid var(--color-line)}
+.path{padding:10px 22px 24px;overflow:hidden}
+.grp{margin-top:16px}
+.gt{display:flex;justify-content:space-between;font-weight:650;font-size:14px;margin-bottom:6px}
+.node{position:relative;display:flex;gap:14px;align-items:flex-start;padding:9px 0 9px 0}
+.node .rail{position:relative;width:22px;flex:none;align-self:stretch;display:flex;justify-content:center}
+.node .rail:before{content:"";position:absolute;top:0;bottom:0;width:2px;background:var(--color-line-strong)}
+.node.first .rail:before{top:18px}.node.last .rail:before{bottom:calc(100% - 18px)}
+.node.done .rail:before{background:var(--color-brand-600)}
+.dot{position:relative;z-index:1;width:22px;height:22px;margin-top:0;border-radius:50%;background:var(--color-surface);border:2px solid var(--color-line-strong);display:grid;place-items:center;color:#fff}
+.node.done .dot{background:var(--color-brand-600);border-color:var(--color-brand-600)}
+.node.now .dot{border-color:var(--color-brand-600);box-shadow:0 0 0 5px var(--color-brand-100)}
+.node.now .dot:after{content:"";width:8px;height:8px;border-radius:50%;background:var(--color-brand-600)}
+.node.quiz .dot{border-radius:6px;transform:rotate(45deg)}
+.node.quiz .dot svg{transform:rotate(-45deg)}
+.node.locked .dot{background:var(--color-sunken)}
+.node .t{font-size:14px;line-height:1.35;padding-top:1px}
+.node.now .t{font-weight:650}
+.node.locked .t{color:var(--color-faint)}
+.node .d{font-size:12px;color:var(--color-muted)}
+.mat{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;border:1px solid var(--color-line);background:var(--color-surface);margin-top:14px}
+.mat .ic{color:var(--color-brand-600)}
+</style></head><body><div class="bar"><span class="btn ghost sm"><svg style="transform:rotate(180deg)" class="ic " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg> My learning</span><div class="grow"><b>TypeScript from zero to production</b></div>
+    <div class="row gap8"><span class="small muted">42% complete</span></div><div class="iconbtn"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 1 1 12 0v5l1.5 2h-15z"/><path d="M10 21h4"/></svg></div><div class="avatar">AK</div></div>
+    <div class="shell"><div class="main"><div class="video"><div class="pb"><svg style="margin-left:4px;fill:currentColor" class="ic " width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 5v14l12-7z"/></svg></div>
+    <div class="ctrl"><svg class="ic " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 5v14l12-7z"/></svg><span>08:04</span><div class="seek"></div><span>21:08</span></div></div>
+    <div class="head"><div><div class="small muted">Module 2 · The type system in depth</div><h1>Generics without fear</h1></div>
+    <div class="row gap8"><span class="btn secondary">Mark as complete</span><span class="btn">Next lesson <svg class="ic " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></span></div></div>
+    <div class="tabs"><a class="on">Overview</a><a>Materials (2)</a><a>Discussion</a></div>
+    <div class="col gap8" style="padding-top:16px;max-width:680px"><p style="color:var(--color-ink-soft)">Generics let one function or type work across many shapes without giving up safety. We start from a repeated helper and refactor it into a constrained generic.</p>
+    <div class="mat"><svg class="ic " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5"/></svg><div class="grow small"><b>generics-cheatsheet.pdf</b><div class="micro muted">PDF · 1.2 MB</div></div><svg class="ic " width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></svg></div></div></div>
+    <aside class="side"><div class="sh"><div class="row sp"><b>Your path</b><span class="small muted">5 of 12 lessons</span></div><div style="margin-top:12px"><div class="track" style="height:8px"><i class="done"></i><i class="part" style="--p:50%"></i><i></i></div></div></div>
+    <div class="path"><div class="grp"><div class="gt"><span>1  Getting set up</span><span class="badge ok">Done</span></div><div class="node done first "><div class="rail"><div class="dot"><svg class="ic " width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg></div></div><div><div class="t">Why types matter</div><div class="d">06:12</div></div></div><div class="node done "><div class="rail"><div class="dot"><svg class="ic " width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg></div></div><div><div class="t">Compiler and editor workflow</div><div class="d">11:40</div></div></div><div class="node done quiz last "><div class="rail"><div class="dot"><svg class="ic " width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg></div></div><div><div class="t">Module quiz · passed 90%</div><div class="d">10 questions</div></div></div></div>
+    <div class="grp"><div class="gt"><span>2  The type system in depth</span><span class="small muted">2 of 4</span></div><div class="node done first "><div class="rail"><div class="dot"><svg class="ic " width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg></div></div><div><div class="t">Unions and narrowing</div><div class="d">18:22</div></div></div><div class="node now "><div class="rail"><div class="dot"></div></div><div><div class="t">Generics without fear</div><div class="d">21:08</div></div></div><div class="node  "><div class="rail"><div class="dot"></div></div><div><div class="t">Utility types</div><div class="d">12:47</div></div></div><div class="node quiz last "><div class="rail"><div class="dot"><svg class="ic " width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5M12 17h.01"/></svg></div></div><div><div class="t">Module quiz</div><div class="d">10 questions</div></div></div></div>
+    <div class="grp"><div class="gt"><span>3  Real projects</span><span class="badge">Locked</span></div><div class="node locked first "><div class="rail"><div class="dot"></div></div><div><div class="t">Typing an API client</div><div class="d">24:30</div></div></div><div class="node locked "><div class="rail"><div class="dot"></div></div><div><div class="t">Error handling patterns</div><div class="d">16:11</div></div></div><div class="node locked quiz last "><div class="rail"><div class="dot"></div></div><div><div class="t">Final assessment</div><div class="d">15 questions</div></div></div></div></div></aside></div></body></html>
