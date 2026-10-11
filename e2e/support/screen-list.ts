@@ -1,6 +1,6 @@
-import { SEED_USERS, cancelWithToken, createStudent, enrollWithToken, seedToken } from "./api";
 import type { Page } from "@playwright/test";
 
+import { SEED_USERS, cancelWithToken, createStudent, enrollWithToken, seedToken } from "./api";
 import { ensureSeedVideos } from "./media";
 import type { ScreenSpec } from "./screens";
 
