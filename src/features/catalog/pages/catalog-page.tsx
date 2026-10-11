@@ -5,6 +5,7 @@ import { useSearchParams } from "react-router";
 import { ErrorState } from "@/components/feedback/error-state";
 import { Pagination } from "@/components/ui/pagination";
 import { usePrefetchCourse } from "@/features/course";
+import { RecommendedCourses } from "@/features/recommendations";
 import { totalPagesFor } from "@/lib/pagination";
 
 import { categoriesQuery, coursesQuery } from "../api";
@@ -50,6 +51,8 @@ export function Component() {
     [filters],
   );
 
+  const showRecommendations = !hasActiveFilters(filters) && filters.page === DEFAULT_FILTERS.page;
+
   const totalPages = courses.data ? totalPagesFor(courses.data.total, CATALOG_PAGE_SIZE) : 1;
 
   return (
@@ -67,6 +70,8 @@ export function Component() {
           <CatalogSearch value={filters.q} onSearch={search} />
         </div>
       </section>
+
+      {showRecommendations ? <RecommendedCourses className="pb-10" /> : null}
 
       <CatalogFilterBar
         filters={filters}

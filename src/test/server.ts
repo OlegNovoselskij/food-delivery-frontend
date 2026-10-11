@@ -7,6 +7,7 @@ const API = `${API_URL}/api/v1`;
 
 export const defaultHandlers = [
   http.get(`${API}/notifications/unread-count`, () => HttpResponse.json({ count: 0 })),
+  http.get(`${API}/recommendations`, () => HttpResponse.json([])),
   http.post(`${API}/ws/ticket`, () => HttpResponse.json({ ticket: "test-ticket", expires_in: 60 })),
 ];
 

@@ -2,6 +2,7 @@ import { LogOut, UserRound } from "lucide-react";
 import { Link } from "react-router";
 
 import type { User } from "@/api/types";
+import { ThemeOptions } from "@/components/layout/theme-options";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -38,6 +39,9 @@ export function UserMenu({ user }: { user: User }) {
             Profile
           </Link>
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <ThemeOptions />
+        <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={signOut}>
           <LogOut aria-hidden="true" />
           Sign out

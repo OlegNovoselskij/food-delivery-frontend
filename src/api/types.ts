@@ -70,3 +70,4 @@ export type UserGrowth = Schemas["GrowthOut"];
 export type GrowthPoint = Schemas["GrowthPoint"];
 export type TeacherRanking = Schemas["TeacherRankingOut"];
 export type TeacherRow = Schemas["TeacherRow"];
+export type Recommendation = Schemas["RecommendationOut"];

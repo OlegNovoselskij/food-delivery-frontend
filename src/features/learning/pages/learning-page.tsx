@@ -12,6 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/features/auth";
 import { myCertificatesQuery } from "@/features/certificates";
 import { EnrollmentRow } from "@/features/enrollment";
+import { RecommendedCourses } from "@/features/recommendations";
 
 import { historyQuery, progressQuery } from "../api";
 import { ActivityPanel, CertificatesPanel, StatsPanel } from "../components/dashboard-aside";
@@ -191,6 +192,7 @@ export function Component() {
         />
       ) : null}
       {history.data ? <DashboardContent items={history.data} /> : null}
+      {history.data ? <RecommendedCourses className="mt-14" /> : null}
     </div>
   );
 }

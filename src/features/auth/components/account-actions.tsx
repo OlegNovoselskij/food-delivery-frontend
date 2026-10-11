@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 
+import { ThemeMenu } from "@/components/layout/theme-menu";
 import { Button } from "@/components/ui/button";
 
 import { useAuth } from "../auth-provider";
@@ -12,6 +13,7 @@ export function AccountActions() {
 
   return (
     <>
+      <ThemeMenu />
       <Button asChild variant="ghost" size="sm">
         <Link to="/sign-in">Sign in</Link>
       </Button>

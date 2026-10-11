@@ -37,3 +37,5 @@ One line per decision where the docs were silent.
 - Every chart has a text summary, an image role labelled by that summary, and a "View as table" toggle; chart animation is off so charts render the same for everyone and in screenshots.
 - Category deletion relies on the API's 409 for categories that still have courses and shows its message.
 - The backend admin panel link opens `/admin` on the API origin in a new tab.
+- Recommendations are requested only for signed-in users because the API answers 401 to visitors; the catalog shows them only without filters on the first page, and the section hides itself when the list is empty.
+- The theme choice (system, light, dark) is in the account menu for signed-in users and in a small theme menu in the top bar for visitors; it is stored in `localStorage` and applied before first paint.
