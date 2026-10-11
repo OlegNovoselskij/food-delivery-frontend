@@ -69,6 +69,17 @@ async function certificateNumber(): Promise<string> {
   return first.certificate_number;
 }
 
+async function seedQuizId(): Promise<number> {
+  const token = await seedToken(SEED_USERS.teacher);
+  const response = await fetch(`${API_URL}/courses/${FASTAPI_COURSE_ID}/program`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const program = (await response.json()) as { modules: { quiz_id: number | null }[] };
+  const quizId = program.modules.find((module) => module.quiz_id !== null)?.quiz_id;
+  if (quizId === undefined || quizId === null) throw new Error("The seed course has no quiz");
+  return quizId;
+}
+
 function once<T>(factory: () => Promise<T>): () => Promise<T> {
   let pending: Promise<T> | null = null;
   return () => {
@@ -508,5 +519,20 @@ export const SCREENS: readonly ScreenSpec[] = [
       await page.getByRole("tab", { name: "Settings" }).click();
     },
     waitFor: (page) => page.getByRole("button", { name: "Save details" }),
+  },
+  {
+    name: "studio-quiz-builder",
+    path: async () => `/studio/courses/${FASTAPI_COURSE_ID}/quizzes/${await seedQuizId()}`,
+    signedInAs: SEED_USERS.teacher,
+    waitFor: (page) => page.getByRole("list", { name: "Questions" }),
+  },
+  {
+    name: "studio-quiz-question-edit",
+    path: async () => `/studio/courses/${FASTAPI_COURSE_ID}/quizzes/${await seedQuizId()}`,
+    signedInAs: SEED_USERS.teacher,
+    prepare: async (page) => {
+      await page.getByRole("button", { name: "Edit question 1" }).click();
+    },
+    waitFor: (page) => page.getByRole("button", { name: "Save question" }),
   },
 ];

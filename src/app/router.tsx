@@ -109,6 +109,10 @@ export const routes: RouteObject[] = [
                     path: "studio/courses/:courseId/lessons/:lessonId",
                     lazy: () => import("@/features/studio/pages/course-builder-page"),
                   },
+                  {
+                    path: "studio/courses/:courseId/quizzes/:quizId",
+                    lazy: () => import("@/features/studio/pages/quiz-builder-page"),
+                  },
                 ],
               },
             ],

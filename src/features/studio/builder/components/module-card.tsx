@@ -12,13 +12,15 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { ChevronDown, Pencil, Plus, Trash2 } from "lucide-react";
+import { ChevronDown, CircleHelp, Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 import type { ProgramModule } from "@/api/types";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
 
+import { useCreateQuiz } from "../../quiz/hooks";
+import { defaultQuizValues, toQuizPayload } from "../../quiz/quiz-schema";
 import { useAddLesson, useDeleteModule, useRenameModule, useReorderLessons } from "../hooks";
 import { moveId } from "../program-model";
 import { AddLessonForm } from "./add-lesson-form";
@@ -48,6 +50,7 @@ export function ModuleCard({ courseId, module, number, selectedLessonId }: Modul
   const remove = useDeleteModule(courseId);
   const addLesson = useAddLesson(courseId);
   const reorder = useReorderLessons(courseId);
+  const createQuiz = useCreateQuiz(courseId, module.id);
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: POINTER_DISTANCE_PX } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
@@ -151,7 +154,11 @@ export function ModuleCard({ courseId, module, number, selectedLessonId }: Modul
                       />
                     ))}
                     {module.quiz_id !== null ? (
-                      <QuizRow questions={module.quiz_questions_count} />
+                      <QuizRow
+                        courseId={courseId}
+                        quizId={module.quiz_id}
+                        questions={module.quiz_questions_count}
+                      />
                     ) : null}
                   </ul>
                 </SortableContext>
@@ -187,6 +194,20 @@ export function ModuleCard({ courseId, module, number, selectedLessonId }: Modul
                     <span className="sr-only"> to {module.title}</span>
                   </Button>
                 )}
+                {module.quiz_id === null && !addingLesson ? (
+                  <Button
+                    variant="link"
+                    className="ml-5 py-2"
+                    disabled={createQuiz.isPending}
+                    onClick={() => {
+                      createQuiz.mutate(toQuizPayload(defaultQuizValues()));
+                    }}
+                  >
+                    <CircleHelp aria-hidden="true" />
+                    {createQuiz.isPending ? "Adding quiz" : "Add quiz"}
+                    <span className="sr-only"> to {module.title}</span>
+                  </Button>
+                ) : null}
               </div>
             </div>
           )}

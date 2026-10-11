@@ -63,11 +63,22 @@ export function LessonRow({ courseId, lesson, selected }: LessonRowProps) {
   );
 }
 
-export function QuizRow({ questions }: { questions: number }) {
+interface QuizRowProps {
+  courseId: number;
+  quizId: number;
+  questions: number;
+}
+
+export function QuizRow({ courseId, quizId, questions }: QuizRowProps) {
   return (
     <li className="flex items-center gap-3 border-t border-line bg-surface px-4 py-2.5 sm:pl-[3.25rem]">
       <CircleHelp aria-hidden="true" className="size-4 shrink-0 text-ink-soft" />
-      <span className="flex-1 font-medium">Module quiz</span>
+      <Link
+        to={`/studio/courses/${courseId}/quizzes/${quizId}`}
+        className="flex-1 font-medium hover:text-brand-700"
+      >
+        Module quiz
+      </Link>
       <Badge tone="brand">
         Quiz · {questions} {questions === 1 ? "question" : "questions"}
       </Badge>
