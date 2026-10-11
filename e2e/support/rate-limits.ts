@@ -31,3 +31,12 @@ export async function resetRateLimits(): Promise<void> {
     await new Promise((done) => setTimeout(done, READY_DELAY_MS));
   }
 }
+
+export async function restartBackend(): Promise<void> {
+  await run("docker", ["compose", "-f", BACKEND_COMPOSE_FILE, "restart", "backend"]);
+  for (let attempt = 0; attempt < READY_RETRIES; attempt += 1) {
+    if (await isBackendReady()) return;
+    await new Promise((done) => setTimeout(done, READY_DELAY_MS));
+  }
+  throw new Error("The backend did not become ready after the restart");
+}

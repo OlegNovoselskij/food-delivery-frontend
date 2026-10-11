@@ -8,6 +8,7 @@
   --color-success-ink: #0b7560;
   --color-danger-ink: #b32d45;
   --color-warning-ink: #9a560b;
+  --color-danger-solid: #b32d45;
   --color-night: #14172b;
   --color-night-brand: #3b47e0;
   --color-on-night: #ffffff;
@@ -28,6 +29,7 @@
   --color-success-ink: #4fd1ae;
   --color-danger-ink: #ff8da1;
   --color-warning-ink: #f5b062;
+  --color-danger-solid: #c9374f;
   --color-night: #0a0c18;
 }
 

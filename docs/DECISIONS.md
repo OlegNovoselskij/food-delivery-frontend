@@ -23,3 +23,6 @@ One line per decision where the docs were silent.
 - Quiz and attempt pages use the main layout (top bar) instead of the slim player bar, and links carry a `?course=` query so the page can show the course context and a back link.
 - A quiz has no time limit in the API, so the quiz page shows progress as "N of M answered" and the pass mark instead of a timer. Answers are saved as a draft in `localStorage` per attempt and removed after submit.
 - The e2e global setup and each e2e spec file restart the backend Valkey container to clear rate limits (10 registrations per hour); set `E2E_KEEP_RATE_LIMITS=1` to skip it.
+- The WebSocket sends `{"type": "notification", "notification": {...}}` wrapped, plus `connected` and `pong` control messages, so the client parses a typed union instead of treating every frame as a notification.
+- A pushed notification is prepended to the cached first page and the unread count is incremented; on every `connected` message the notification queries are refetched so anything published while the socket was down is not lost.
+- While the socket is not open the unread count is polled every 60 s.

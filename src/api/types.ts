@@ -38,3 +38,5 @@ export type AnswerReview = Schemas["AnswerReviewOut"];
 export type AnswerIn = Schemas["AnswerIn"];
 export type ReviewCreate = Schemas["ReviewCreate"];
 export type ReviewUpdate = Schemas["ReviewUpdate"];
+export type Notification = Schemas["NotificationOut"];
+export type NotificationPage = Schemas["NotificationPage"];

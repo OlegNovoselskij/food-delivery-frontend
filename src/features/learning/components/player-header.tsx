@@ -3,6 +3,7 @@ import { Link } from "react-router";
 
 import { Button } from "@/components/ui/button";
 import { AccountActions } from "@/features/auth";
+import { NotificationBell } from "@/features/notifications";
 
 interface PlayerHeaderProps {
   courseTitle: string;
@@ -37,6 +38,7 @@ export function PlayerHeader({
         <ListTree aria-hidden="true" />
         Your path
       </Button>
+      <NotificationBell />
       <AccountActions />
     </header>
   );

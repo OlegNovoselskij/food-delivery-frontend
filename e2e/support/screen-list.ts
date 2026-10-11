@@ -412,4 +412,39 @@ export const SCREENS: readonly ScreenSpec[] = [
     tokenFor: reviewOwnStudent,
     waitFor: (page) => page.getByRole("region", { name: "Your review" }),
   },
+  {
+    name: "certificates",
+    path: "/certificates",
+    signedInAs: SEED_USERS.student,
+    waitFor: (page) => page.getByRole("button", { name: "Download PDF" }),
+  },
+  {
+    name: "certificates-empty",
+    path: "/certificates",
+    tokenFor: emptyStudent,
+    waitFor: (page) => page.getByRole("heading", { name: "No certificates yet" }),
+  },
+  {
+    name: "notifications",
+    path: "/notifications",
+    signedInAs: SEED_USERS.student,
+    waitFor: (page) =>
+      page.getByText("Quiz graded", { exact: false }).or(page.getByText("Your quiz was graded")),
+  },
+  {
+    name: "notifications-empty",
+    path: "/notifications",
+    tokenFor: emptyStudent,
+    waitFor: (page) => page.getByRole("heading", { name: "No notifications yet" }),
+  },
+  {
+    name: "notification-bell-open",
+    path: "/courses",
+    signedInAs: SEED_USERS.student,
+    prepare: async (page) => {
+      await page.getByRole("button", { name: /Notifications, \d+ unread/ }).click();
+      await page.getByText("Your quiz was graded").first().waitFor();
+    },
+    waitFor: (page) => page.getByRole("dialog", { name: "Notifications" }),
+  },
 ];

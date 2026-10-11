@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import { Outlet, ScrollRestoration, useLocation } from "react-router";
 
+import { NotificationsProvider } from "@/features/notifications";
+
 import { MAIN_CONTENT_ID } from "./app-shell";
 
 function focusMainContent(): void {
@@ -26,7 +28,7 @@ export function RootLayout() {
   }, [pathname]);
 
   return (
-    <>
+    <NotificationsProvider>
       <a
         href={`#${MAIN_CONTENT_ID}`}
         className="sr-only rounded-control bg-surface px-4 py-2 font-semibold text-brand-700 focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50"
@@ -35,6 +37,6 @@ export function RootLayout() {
       </a>
       <Outlet />
       <ScrollRestoration />
-    </>
+    </NotificationsProvider>
   );
 }

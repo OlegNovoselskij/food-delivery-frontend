@@ -70,6 +70,14 @@ export const routes: RouteObject[] = [
               { path: "profile", lazy: () => import("@/features/profile/pages/profile-page") },
               { path: "learning", lazy: () => import("@/features/learning/pages/learning-page") },
               {
+                path: "certificates",
+                lazy: () => import("@/features/certificates/pages/certificates-page"),
+              },
+              {
+                path: "notifications",
+                lazy: () => import("@/features/notifications/pages/notifications-page"),
+              },
+              {
                 path: "learning/quizzes/:quizId",
                 lazy: () => import("@/features/quiz/pages/quiz-page"),
               },

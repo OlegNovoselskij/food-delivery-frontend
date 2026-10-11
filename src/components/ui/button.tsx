@@ -12,7 +12,7 @@ const buttonVariants = cva(
         primary: "bg-brand-600 text-on-brand hover:bg-brand-700",
         secondary: "border border-line-strong bg-surface text-ink hover:bg-sunken",
         ghost: "text-ink-soft hover:bg-sunken",
-        danger: "bg-danger-600 text-white hover:brightness-95",
+        danger: "bg-danger-solid text-white hover:brightness-95",
         link: "h-auto rounded-none px-0 text-brand-700 underline-offset-4 hover:underline",
       },
       size: {

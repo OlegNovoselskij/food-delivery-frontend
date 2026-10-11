@@ -7,6 +7,7 @@ const PUBLIC_NAV: readonly NavItem[] = [COURSES_NAV];
 const STUDENT_NAV: readonly NavItem[] = [
   COURSES_NAV,
   { to: "/learning", label: "My learning", end: false },
+  { to: "/certificates", label: "Certificates" },
 ];
 const TEACHER_NAV: readonly NavItem[] = [COURSES_NAV];
 const ADMIN_NAV: readonly NavItem[] = [];
