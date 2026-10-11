@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { buildLesson, buildModule, buildProgram } from "@/test/factories";
 
-import { firstPreviewLesson, formatTotalDuration, lessonPath, quizCount } from "./program";
+import { firstPreviewLesson, formatTotalDuration, quizCount } from "./program";
 
 describe("firstPreviewLesson", () => {
   it("finds the first preview lesson across modules", () => {
@@ -42,11 +42,5 @@ describe("formatTotalDuration", () => {
     expect(formatTotalDuration(45)).toBe("45 min");
     expect(formatTotalDuration(120)).toBe("2 h");
     expect(formatTotalDuration(135)).toBe("2 h 15 min");
-  });
-});
-
-describe("lessonPath", () => {
-  it("builds the player URL", () => {
-    expect(lessonPath(3, 9)).toBe("/learning/courses/3/lessons/9");
   });
 });

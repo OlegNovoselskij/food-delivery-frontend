@@ -10,10 +10,12 @@ import {
   buildCourse,
   buildCourseListItem,
   buildEnrollment,
+  buildHistoryItem,
   buildProgram,
   buildReviewPage,
   buildUser,
 } from "@/test/factories";
+import { buildProgressFor } from "@/test/progress-factory";
 import { renderApp } from "@/test/render-app";
 import { server } from "@/test/server";
 
@@ -215,7 +217,9 @@ describe("cancelling", () => {
     });
     server.use(
       http.get(`${API}/users/me`, () => HttpResponse.json(buildUser({ id: 2 }))),
-      http.get(`${API}/enrollments/mine`, () => HttpResponse.json([paid])),
+      http.get(`${API}/learning/history`, () => HttpResponse.json([buildHistoryItem(paid)])),
+      http.get(`${API}/certificates/mine`, () => HttpResponse.json([])),
+      http.get(`${API}/enrollments/11/progress`, () => HttpResponse.json(buildProgressFor([]))),
     );
     const user = userEvent.setup();
     renderApp({ path: "/learning", token: "t" });
@@ -250,7 +254,13 @@ describe("my learning", () => {
     ];
     server.use(
       http.get(`${API}/users/me`, () => HttpResponse.json(buildUser({ id: 2 }))),
-      http.get(`${API}/enrollments/mine`, () => HttpResponse.json(enrollments)),
+      http.get(`${API}/learning/history`, () =>
+        HttpResponse.json(enrollments.map((enrollment) => buildHistoryItem(enrollment))),
+      ),
+      http.get(`${API}/certificates/mine`, () => HttpResponse.json([])),
+      http.get(`${API}/enrollments/2/progress`, () =>
+        HttpResponse.json(buildProgressFor([{ id: 1, lessons: [{ id: 5 }] }])),
+      ),
     );
     renderApp({ path: "/learning", token: "t" });
     const pending = (await screen.findByRole("heading", { name: "Pending course" })).closest(
@@ -281,7 +291,8 @@ describe("my learning", () => {
   it("explains an empty list and links to the catalog", async () => {
     server.use(
       http.get(`${API}/users/me`, () => HttpResponse.json(buildUser({ id: 2 }))),
-      http.get(`${API}/enrollments/mine`, () => HttpResponse.json([])),
+      http.get(`${API}/learning/history`, () => HttpResponse.json([])),
+      http.get(`${API}/certificates/mine`, () => HttpResponse.json([])),
     );
     renderApp({ path: "/learning", token: "t" });
     expect(await screen.findByText("You are not enrolled in any course yet")).toBeInTheDocument();

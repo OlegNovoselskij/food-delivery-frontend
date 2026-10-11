@@ -2,6 +2,7 @@ import type {
   Course,
   CourseListItem,
   Enrollment,
+  HistoryItem,
   LessonSummary,
   Program,
   ProgramModule,
@@ -121,6 +122,26 @@ export function buildReviewPage(overrides: Partial<ReviewPage> = {}): ReviewPage
     size: 10,
     rating_avg: 4.8,
     reviews_count: 1,
+    ...overrides,
+  };
+}
+
+export function buildHistoryItem(
+  enrollment: Enrollment,
+  overrides: Partial<HistoryItem> = {},
+): HistoryItem {
+  return {
+    enrollment,
+    progress: {
+      percent: 0,
+      lessons_total: 0,
+      lessons_completed: 0,
+      quizzes_total: 0,
+      quizzes_passed: 0,
+      minutes_total: 0,
+      minutes_completed: 0,
+    },
+    last_activity_at: null,
     ...overrides,
   };
 }

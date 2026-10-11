@@ -10,9 +10,10 @@ import { EnrollmentStatusBadge } from "./enrollment-status-badge";
 interface EnrollmentRowProps {
   enrollment: Enrollment;
   progress?: ReactNode;
+  certificateNumber?: string | undefined;
 }
 
-export function EnrollmentRow({ enrollment, progress }: EnrollmentRowProps) {
+export function EnrollmentRow({ enrollment, progress, certificateNumber }: EnrollmentRowProps) {
   const { course } = enrollment;
 
   return (
@@ -38,7 +39,7 @@ export function EnrollmentRow({ enrollment, progress }: EnrollmentRowProps) {
           {progress ?? <EnrollmentStatusBadge status={enrollment.status} />}
         </div>
       </div>
-      <EnrollmentActions enrollment={enrollment} />
+      <EnrollmentActions enrollment={enrollment} certificateNumber={certificateNumber} />
     </article>
   );
 }

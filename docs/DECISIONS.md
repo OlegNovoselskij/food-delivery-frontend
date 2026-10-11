@@ -17,3 +17,5 @@ One line per decision where the docs were silent.
 - E2E users use `@demo.example.com` addresses because the backend email validator rejects `.test` domains.
 - The profile page (name, surname, phone, bio, sessions) is built in M1 so the protected-route and sign-out acceptance can be verified in a browser; M9 adds the theme toggle to it.
 - Forgot and reset password pages are open to signed-in users too, because the profile page links to them for sign out everywhere.
+- `jsx-a11y/media-has-caption` is turned off for the lesson video component in the ESLint config because the API has no captions or subtitle tracks.
+- The player is a route layout without a footer; the lesson page renders its own slim header, and visitors can open preview lessons without signing in.

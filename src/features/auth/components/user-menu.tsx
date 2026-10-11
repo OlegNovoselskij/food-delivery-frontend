@@ -10,8 +10,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useSignOut } from "@/features/auth";
 import { initials } from "@/lib/format";
+
+import { useSignOut } from "../hooks";
 
 export function UserMenu({ user }: { user: User }) {
   const signOut = useSignOut();

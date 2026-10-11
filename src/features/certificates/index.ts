@@ -1,1 +1,1 @@
-export { certificateKeys } from "./api";
+export { certificateKeys, myCertificatesQuery } from "./api";

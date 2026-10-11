@@ -17,3 +17,11 @@ export function verifyCertificateQuery(number: string) {
     retry: false,
   });
 }
+
+export function myCertificatesQuery() {
+  return queryOptions({
+    queryKey: certificateKeys.mine,
+    queryFn: () => unwrap(api.GET("/api/v1/certificates/mine")),
+    staleTime: 0,
+  });
+}

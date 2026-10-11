@@ -1,8 +1,8 @@
 import { Link } from "react-router";
 
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/features/auth";
 
+import { useAuth } from "../auth-provider";
 import { UserMenu } from "./user-menu";
 
 export function AccountActions() {

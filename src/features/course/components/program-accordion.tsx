@@ -10,8 +10,7 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { formatDuration } from "@/lib/dates";
-
-import { lessonPath } from "../program";
+import { lessonPath } from "@/lib/paths";
 
 interface ProgramAccordionProps {
   courseId: number;

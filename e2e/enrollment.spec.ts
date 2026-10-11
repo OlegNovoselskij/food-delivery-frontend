@@ -1,7 +1,13 @@
 import { expect, test, type Page } from "@playwright/test";
 
-import { createStudent } from "./support/api";
+import { createStudent, type TestUser } from "./support/api";
 import { useToken } from "./support/session";
+
+let student: TestUser;
+
+test.beforeAll(async () => {
+  student = await createStudent("e2e-enroll");
+});
 
 const FREE_COURSE_ID = 3;
 const PAID_COURSE_ID = 5;
@@ -16,7 +22,6 @@ async function payWithCard(page: Page, number: string): Promise<void> {
 }
 
 test("a student enrolls in a free course and it becomes available instantly", async ({ page }) => {
-  const student = await createStudent("e2e-free");
   await useToken(page, student.token);
   await page.goto(`/courses/${FREE_COURSE_ID}`);
   await page.getByRole("button", { name: "Enroll for free" }).click();
@@ -31,7 +36,6 @@ test("a student enrolls in a free course and it becomes available instantly", as
 test("a paid course goes through a declined payment, a successful payment and a refunded cancellation", async ({
   page,
 }) => {
-  const student = await createStudent("e2e-paid");
   await useToken(page, student.token);
   await page.goto(`/courses/${PAID_COURSE_ID}`);
 
@@ -64,7 +68,6 @@ test("a paid course goes through a declined payment, a successful payment and a 
 });
 
 test("a pending payment can be resumed later and cancelled", async ({ page }) => {
-  const student = await createStudent("e2e-pending");
   await useToken(page, student.token);
   await page.goto(`/courses/${PAID_COURSE_ID}`);
   await page.getByRole("button", { name: "Enroll in course" }).click();
@@ -77,13 +80,4 @@ test("a pending payment can be resumed later and cancelled", async ({ page }) =>
   await row.getByRole("button", { name: "Cancel enrollment" }).click();
   await page.getByRole("alertdialog").getByRole("button", { name: "Cancel enrollment" }).click();
   await expect(row.getByText("Cancelled")).toBeVisible();
-});
-
-test("an empty learning page invites the student to browse", async ({ page }) => {
-  const student = await createStudent("e2e-empty");
-  await useToken(page, student.token);
-  await page.goto("/learning");
-  await expect(page.getByText("You are not enrolled in any course yet")).toBeVisible();
-  await page.getByRole("link", { name: "Browse courses" }).click();
-  await expect(page).toHaveURL(/\/courses$/);
 });

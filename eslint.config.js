@@ -74,6 +74,10 @@ export default tseslint.config(
     ...tseslint.configs.disableTypeChecked,
   },
   {
+    files: ["src/features/learning/components/lesson-video.tsx"],
+    rules: { "jsx-a11y/media-has-caption": "off" },
+  },
+  {
     files: ["scripts/**/*.mjs"],
     languageOptions: { globals: { ...globals.node } },
   },

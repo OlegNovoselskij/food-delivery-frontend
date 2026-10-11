@@ -5,6 +5,7 @@ import { GuestOnly, RequireAuth } from "@/features/auth";
 
 import { AuthLayout } from "./layouts/auth-layout";
 import { MainLayout } from "./layouts/main-layout";
+import { PlayerLayout } from "./layouts/player-layout";
 import { RootLayout } from "./layouts/root-layout";
 import { RouteErrorPage } from "./pages/route-error-page";
 
@@ -31,6 +32,24 @@ export const routes: RouteObject[] = [
           {
             path: "reset-password",
             lazy: () => import("@/features/auth/pages/reset-password-page"),
+          },
+        ],
+      },
+      {
+        element: <PlayerLayout />,
+        children: [
+          {
+            path: "learning/courses/:courseId/lessons/:lessonId",
+            lazy: () => import("@/features/learning/pages/lesson-player-page"),
+          },
+          {
+            element: <RequireAuth />,
+            children: [
+              {
+                path: "learning/courses/:courseId",
+                lazy: () => import("@/features/learning/pages/course-entry-page"),
+              },
+            ],
           },
         ],
       },

@@ -9,18 +9,19 @@ export const SheetTrigger = Dialog.Trigger;
 export const SheetClose = Dialog.Close;
 export const SheetTitle = Dialog.Title;
 
-export function SheetContent({
-  className,
-  children,
-  ...props
-}: ComponentProps<typeof Dialog.Content>) {
+interface SheetContentProps extends ComponentProps<typeof Dialog.Content> {
+  side?: "left" | "right";
+}
+
+export function SheetContent({ className, children, side = "left", ...props }: SheetContentProps) {
   return (
     <Dialog.Portal>
       <Dialog.Overlay className="fixed inset-0 z-40 bg-ink/40" />
       <Dialog.Content
         aria-describedby={undefined}
         className={cn(
-          "fixed inset-y-0 left-0 z-50 flex w-[min(20rem,85vw)] flex-col gap-4 border-r border-line bg-surface p-5 shadow-pop",
+          "fixed inset-y-0 z-50 flex w-[min(24rem,90vw)] flex-col gap-4 overflow-y-auto border-line bg-surface p-5 shadow-pop",
+          side === "left" ? "left-0 border-r" : "right-0 border-l",
           className,
         )}
         {...props}

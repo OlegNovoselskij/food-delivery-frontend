@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/features/auth";
 import { useCourseEnrollment } from "@/features/enrollment";
+import { parseId } from "@/lib/ids";
 
 import { hasFullAccess, resolveCourseAccess } from "../access";
 import { courseDetailQuery, courseProgramQuery } from "../api";
@@ -18,7 +19,6 @@ import { EnrollCard } from "../components/enroll-card";
 import { ProgramAccordion } from "../components/program-accordion";
 import { ReviewsPanel } from "../components/reviews-panel";
 import { TeacherPanel } from "../components/teacher-panel";
-import { parseCourseId } from "../course-id";
 
 const HTTP_NOT_FOUND = 404;
 const TABS = ["program", "reviews", "teacher"] as const;
@@ -131,7 +131,7 @@ function CourseView({ courseId }: { courseId: number }) {
 
 export function Component() {
   const { courseId } = useParams();
-  const parsed = parseCourseId(courseId);
+  const parsed = parseId(courseId);
   if (parsed === null) return <CourseNotFound />;
   return <CourseView courseId={parsed} />;
 }

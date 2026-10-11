@@ -19,7 +19,3 @@ export function formatTotalDuration(minutes: number): string {
   if (hours === 0) return `${rest} min`;
   return rest === 0 ? `${hours} h` : `${hours} h ${rest} min`;
 }
-
-export function lessonPath(courseId: number, lessonId: number): string {
-  return `/learning/courses/${courseId}/lessons/${lessonId}`;
-}

@@ -8,7 +8,12 @@ import { useCancelEnrollment } from "../hooks";
 import { ENROLLMENT_STATUS, canCancel } from "../status";
 import { PaymentDialog } from "./payment-dialog";
 
-export function EnrollmentActions({ enrollment }: { enrollment: Enrollment }) {
+interface EnrollmentActionsProps {
+  enrollment: Enrollment;
+  certificateNumber?: string | undefined;
+}
+
+export function EnrollmentActions({ enrollment, certificateNumber }: EnrollmentActionsProps) {
   const [paymentOpen, setPaymentOpen] = useState(false);
   const { cancel, isPending } = useCancelEnrollment();
   const courseHref = `/courses/${enrollment.course.id}`;
@@ -40,9 +45,16 @@ export function EnrollmentActions({ enrollment }: { enrollment: Enrollment }) {
         </Button>
       ) : null}
       {enrollment.status === ENROLLMENT_STATUS.completed ? (
-        <Button asChild variant="secondary" size="sm">
-          <Link to={learnHref}>Review course</Link>
-        </Button>
+        <>
+          {certificateNumber ? (
+            <Button asChild size="sm">
+              <Link to={`/certificates/verify/${certificateNumber}`}>View certificate</Link>
+            </Button>
+          ) : null}
+          <Button asChild variant="secondary" size="sm">
+            <Link to={learnHref}>Review course</Link>
+          </Button>
+        </>
       ) : null}
       {enrollment.status === ENROLLMENT_STATUS.cancelled ? (
         <Button asChild variant="secondary" size="sm">

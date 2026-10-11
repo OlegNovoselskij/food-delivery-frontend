@@ -13,10 +13,11 @@ import {
   useEnrollMutation,
 } from "@/features/enrollment";
 import { isFree } from "@/lib/money";
+import { lessonPath } from "@/lib/paths";
 import { signInPathFor } from "@/lib/safe-redirect";
 
 import type { CourseAccess } from "../access";
-import { firstPreviewLesson, formatTotalDuration, lessonPath, quizCount } from "../program";
+import { firstPreviewLesson, formatTotalDuration, quizCount } from "../program";
 
 interface EnrollCardProps {
   course: Course;

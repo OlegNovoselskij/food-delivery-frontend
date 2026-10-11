@@ -3,8 +3,7 @@ import { Outlet } from "react-router";
 import { Footer } from "@/components/layout/footer";
 import type { NavItem } from "@/components/layout/nav-types";
 import { Topbar } from "@/components/layout/topbar";
-
-import { AccountActions } from "./account-actions";
+import { AccountActions } from "@/features/auth";
 
 export const MAIN_CONTENT_ID = "main";
 

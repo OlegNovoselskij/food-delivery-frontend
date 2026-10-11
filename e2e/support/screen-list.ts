@@ -1,12 +1,43 @@
 import { SEED_USERS, cancelWithToken, createStudent, enrollWithToken, seedToken } from "./api";
+import type { Page } from "@playwright/test";
+
+import { ensureSeedVideos } from "./media";
 import type { ScreenSpec } from "./screens";
 
 const REGISTER_URL = "**/api/v1/auth/register";
 const COURSES_URL = "**/api/v1/courses?*";
 const API_URL = "http://localhost:8000/api/v1";
 
+const VIDEO_READY_STATE = 2;
+const PREVIEW_FRAME_SECONDS = 1.6;
 const FASTAPI_COURSE_ID = 2;
 const PYTHON_COURSE_ID = 1;
+
+async function waitForVideoFrame(page: Page): Promise<void> {
+  await page.waitForFunction(
+    (state) => (document.querySelector("video")?.readyState ?? 0) >= state,
+    VIDEO_READY_STATE,
+  );
+  await page.evaluate(
+    (time) =>
+      new Promise<void>((done) => {
+        const video = document.querySelector("video");
+        if (video === null) {
+          done();
+          return;
+        }
+        video.addEventListener(
+          "seeked",
+          () => {
+            done();
+          },
+          { once: true },
+        );
+        video.currentTime = time;
+      }),
+    PREVIEW_FRAME_SECONDS,
+  );
+}
 
 async function certificateNumber(): Promise<string> {
   const token = await seedToken(SEED_USERS.student);
@@ -206,5 +237,52 @@ export const SCREENS: readonly ScreenSpec[] = [
       await page.getByRole("button", { name: "Cancel enrollment" }).click();
     },
     waitFor: (page) => page.getByRole("alertdialog", { name: "Cancel enrollment?" }),
+  },
+  {
+    name: "lesson-player",
+    path: async () => {
+      await ensureSeedVideos(2, [7, 8, 10, 11]);
+      return "/learning/courses/2/lessons/8";
+    },
+    signedInAs: SEED_USERS.student,
+    prepare: waitForVideoFrame,
+    waitFor: (page) => page.locator("video"),
+  },
+  {
+    name: "lesson-preview-visitor",
+    path: "/learning/courses/2/lessons/7",
+    prepare: waitForVideoFrame,
+    waitFor: (page) => page.locator("video"),
+  },
+  {
+    name: "lesson-locked",
+    path: "/learning/courses/2/lessons/8",
+    waitFor: (page) => page.getByRole("heading", { name: "Enroll to open this lesson" }),
+  },
+  {
+    name: "lesson-article",
+    path: "/learning/courses/2/lessons/9",
+    signedInAs: SEED_USERS.student,
+    waitFor: (page) => page.getByRole("heading", { level: 1, name: "Database access" }),
+  },
+  {
+    name: "lesson-loading",
+    path: "/learning/courses/2/lessons/8",
+    signedInAs: SEED_USERS.student,
+    intercept: async (page) => {
+      await page.route("**/api/v1/lessons/8", () => new Promise<void>(() => undefined));
+    },
+    waitFor: (page) => page.getByRole("status", { name: "Loading lesson" }),
+  },
+  {
+    name: "lesson-path-drawer",
+    path: "/learning/courses/2/lessons/8",
+    signedInAs: SEED_USERS.student,
+    prepare: async (page) => {
+      await page.getByRole("heading", { level: 1, name: "Dependency injection" }).waitFor();
+      const open = page.getByRole("button", { name: "Your path" });
+      if (await open.isVisible()) await open.click();
+    },
+    waitFor: (page) => page.locator("h1").or(page.getByRole("dialog")).first(),
   },
 ];

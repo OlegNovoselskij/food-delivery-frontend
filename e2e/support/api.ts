@@ -86,3 +86,27 @@ export async function cancelWithToken(token: string, enrollmentId: number): Prom
   });
   if (!response.ok) throw new Error(`Cancel failed: ${response.status}`);
 }
+
+export async function payWithToken(
+  token: string,
+  enrollmentId: number,
+  paymentToken = "tok_card_4242",
+): Promise<void> {
+  const response = await fetch(`${API_URL}/enrollments/${enrollmentId}/pay`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ method: "card", payment_token: paymentToken }),
+  });
+  if (!response.ok) throw new Error(`Pay failed: ${response.status}`);
+}
+
+export async function createEnrolledStudent(prefix: string, courseId: number): Promise<TestUser> {
+  const student = await createStudent(prefix);
+  const enrollmentId = await enrollWithToken(student.token, courseId);
+  const detail = await fetch(`${API_URL}/enrollments/${enrollmentId}`, {
+    headers: { Authorization: `Bearer ${student.token}` },
+  });
+  const { status } = (await detail.json()) as { status: string };
+  if (status === "pending_payment") await payWithToken(student.token, enrollmentId);
+  return student;
+}
