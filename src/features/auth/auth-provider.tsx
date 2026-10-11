@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 
 import { authToken } from "@/api/auth-token";
 import { toApiError } from "@/api/errors";
+import type { User } from "@/api/types";
 
 import { currentUserQuery } from "./api";
 import type { Session } from "./session";
@@ -50,4 +51,12 @@ export function useAuth(): AuthContextValue {
   const context = useContext(AuthContext);
   if (context === null) throw new Error("useAuth must be used inside AuthProvider");
   return context;
+}
+
+export function useUser(): User {
+  const { session } = useAuth();
+  if (session.status !== "authenticated") {
+    throw new Error("useUser must be used on a page behind RequireAuth");
+  }
+  return session.user;
 }

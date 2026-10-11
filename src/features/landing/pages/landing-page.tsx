@@ -25,7 +25,7 @@ const SAMPLE_PATH = [1, 1, 0.45, 0, 0] as const;
 export function Component() {
   return (
     <>
-      <title>Atrium | Courses taught by people who do the work</title>
+      <title>Courses taught by people who do the work · Atrium</title>
       <section className="container-page pt-14 pb-10 sm:pt-20">
         <h1 className="max-w-3xl text-display font-bold">
           Courses taught by people who do the work

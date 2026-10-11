@@ -6,7 +6,7 @@ export function Footer() {
       <div className="container-page flex flex-col gap-3 py-8 sm:flex-row sm:items-center sm:justify-between">
         <Logo />
         <p className="text-small text-muted">
-          Online courses with verifiable certificates. {new Date().getFullYear()} Atrium.
+          Online courses with verifiable certificates. © {new Date().getFullYear()} Atrium
         </p>
       </div>
     </footer>

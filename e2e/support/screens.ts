@@ -18,7 +18,10 @@ export type Theme = (typeof THEMES)[number];
 export interface ScreenSpec {
   name: string;
   path: string;
+  signedInAs?: string;
   prepare?: (page: Page) => Promise<void>;
+  ready?: (page: Page) => Promise<void>;
 }
 
 export const SCREENSHOT_DIR = "docs/screenshots";
+export const TOKEN_STORAGE_KEY = "atrium.token";

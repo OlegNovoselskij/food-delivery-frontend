@@ -1,11 +1,8 @@
 import { expect, test } from "@playwright/test";
 
-import { SCREENSHOT_DIR, THEMES, VIEWPORTS, type ScreenSpec } from "./support/screens";
-
-const SCREENS: readonly ScreenSpec[] = [
-  { name: "landing", path: "/" },
-  { name: "not-found", path: "/no/such/page" },
-];
+import { seedToken } from "./support/api";
+import { SCREENS } from "./support/screen-list";
+import { SCREENSHOT_DIR, THEMES, TOKEN_STORAGE_KEY, VIEWPORTS } from "./support/screens";
 
 for (const screen of SCREENS) {
   for (const viewport of VIEWPORTS) {
@@ -15,10 +12,20 @@ for (const screen of SCREENS) {
           viewport: { width: viewport.width, height: viewport.height },
           colorScheme: theme,
         });
+        if (screen.signedInAs !== undefined) {
+          const token = await seedToken(screen.signedInAs);
+          await context.addInitScript(
+            ([key, value]) => {
+              window.localStorage.setItem(key, value);
+            },
+            [TOKEN_STORAGE_KEY, token] as const,
+          );
+        }
         const page = await context.newPage();
         await page.goto(screen.path);
         await screen.prepare?.(page);
         await expect(page.locator("h1").first()).toBeVisible();
+        await screen.ready?.(page);
         const hasHorizontalScroll = await page.evaluate(
           () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
         );

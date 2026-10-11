@@ -13,3 +13,7 @@ One line per decision where the docs were silent.
 - The theme is `system`, `light` or `dark`, stored in `localStorage`, and applied before first paint by `public/theme-init.js` because the CSP forbids inline scripts.
 - Pages are lazy route modules that export a named `Component`, so there are no default exports in the app.
 - The nginx image reads `API_ORIGIN`, `API_WS_ORIGIN` and `STORAGE_ORIGIN` at container start to build the CSP.
+- Tokens `success-ink`, `danger-ink` and `warning-ink` (with dark overrides) are added for text because `*-600` fails 4.5:1 as small text; `*-600` stays for icons and borders.
+- E2E users use `@demo.example.com` addresses because the backend email validator rejects `.test` domains.
+- The profile page (name, surname, phone, bio, sessions) is built in M1 so the protected-route and sign-out acceptance can be verified in a browser; M9 adds the theme toggle to it.
+- Forgot and reset password pages are open to signed-in users too, because the profile page links to them for sign out everywhere.
