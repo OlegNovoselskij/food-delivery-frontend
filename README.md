@@ -36,28 +36,28 @@ Sign-up codes arrive in Mailpit at `http://localhost:8025`.
 
 ## Environment variables
 
-| Variable                | Default                 | Purpose                                                                                |
-| ----------------------- | ----------------------- | -------------------------------------------------------------------------------------- |
-| `VITE_API_URL`          | `http://localhost:8000` | Backend origin for REST, WebSocket and the admin panel link                            |
-| `VITE_GOOGLE_CLIENT_ID` | empty                   | Google sign-in client id; the Google button is hidden when it is empty                 |
+| Variable                | Default                 | Purpose                                                                |
+| ----------------------- | ----------------------- | ---------------------------------------------------------------------- |
+| `VITE_API_URL`          | `http://localhost:8000` | Backend origin for REST, WebSocket and the admin panel link            |
+| `VITE_GOOGLE_CLIENT_ID` | empty                   | Google sign-in client id; the Google button is hidden when it is empty |
 
 Both are read at build time and validated with zod in `src/config/env.ts`.
 
 ## Scripts
 
-| Script                  | Purpose                                                                                    |
-| ----------------------- | ------------------------------------------------------------------------------------------ |
-| `npm run dev`           | Dev server on port 5173                                                                    |
-| `npm run build`         | Type-check and build to `dist`                                                             |
-| `npm run preview`       | Serve the production build                                                                 |
-| `npm run typecheck`     | `tsc --noEmit`                                                                             |
-| `npm run lint`          | ESLint with zero warnings                                                                  |
-| `npm run format`        | Prettier write (`format:check` verifies)                                                   |
-| `npm run check:comments`| Fails if any source file contains a comment                                                |
-| `npm test`              | Vitest unit and component tests (MSW)                                                      |
-| `npm run test:e2e`      | Playwright against the real backend with seed data                                         |
-| `npm run api:types`     | Regenerate `src/api/schema.d.ts` from `http://localhost:8000/openapi.json`                 |
-| `npm run check`         | Typecheck, lint, format check, comment check, unit tests and build; run before every commit |
+| Script                   | Purpose                                                                                     |
+| ------------------------ | ------------------------------------------------------------------------------------------- |
+| `npm run dev`            | Dev server on port 5173                                                                     |
+| `npm run build`          | Type-check and build to `dist`                                                              |
+| `npm run preview`        | Serve the production build                                                                  |
+| `npm run typecheck`      | `tsc --noEmit`                                                                              |
+| `npm run lint`           | ESLint with zero warnings                                                                   |
+| `npm run format`         | Prettier write (`format:check` verifies)                                                    |
+| `npm run check:comments` | Fails if any source file contains a comment                                                 |
+| `npm test`               | Vitest unit and component tests (MSW)                                                       |
+| `npm run test:e2e`       | Playwright against the real backend with seed data                                          |
+| `npm run api:types`      | Regenerate `src/api/schema.d.ts` from `http://localhost:8000/openapi.json`                  |
+| `npm run check`          | Typecheck, lint, format check, comment check, unit tests and build; run before every commit |
 
 End-to-end specs live in `e2e/`. They need the backend, Mailpit and RustFS running; the global setup checks `/health/ready` and the specs restart the Valkey container to clear rate limits (set `E2E_KEEP_RATE_LIMITS=1` to skip that). `e2e/a11y.spec.ts` runs axe on every screen in both themes and both widths. `e2e/screenshots.spec.ts` regenerates `docs/screenshots/` (`SCREEN=<name>` limits it to one screen).
 
@@ -102,20 +102,20 @@ docker run -p 8080:80 \
 
 Every screen is captured at 1440 and 390 px, in light and dark, in `docs/screenshots/<name>-<theme>-<width>.png`.
 
-| Catalog                                                 | Lesson player                                                 |
-| ------------------------------------------------------- | ------------------------------------------------------------- |
-| ![Catalog](docs/screenshots/catalog-light-1440.png)     | ![Lesson player](docs/screenshots/lesson-player-light-1440.png) |
+| Catalog                                             | Lesson player                                                   |
+| --------------------------------------------------- | --------------------------------------------------------------- |
+| ![Catalog](docs/screenshots/catalog-light-1440.png) | ![Lesson player](docs/screenshots/lesson-player-light-1440.png) |
 
-| Course builder                                               | Quiz builder                                                       |
-| ------------------------------------------------------------ | ------------------------------------------------------------------ |
+| Course builder                                                    | Quiz builder                                                         |
+| ----------------------------------------------------------------- | -------------------------------------------------------------------- |
 | ![Course builder](docs/screenshots/studio-builder-light-1440.png) | ![Quiz builder](docs/screenshots/studio-quiz-builder-light-1440.png) |
 
-| Course analytics                                              | Admin overview                                                 |
-| ------------------------------------------------------------- | -------------------------------------------------------------- |
+| Course analytics                                               | Admin overview                                                    |
+| -------------------------------------------------------------- | ----------------------------------------------------------------- |
 | ![Analytics](docs/screenshots/studio-analytics-light-1440.png) | ![Admin overview](docs/screenshots/admin-overview-light-1440.png) |
 
-| Dark theme, mobile                                          |
-| ----------------------------------------------------------- |
+| Dark theme, mobile                                            |
+| ------------------------------------------------------------- |
 | ![Catalog dark mobile](docs/screenshots/catalog-dark-390.png) |
 
 ## Decisions and backend changes
