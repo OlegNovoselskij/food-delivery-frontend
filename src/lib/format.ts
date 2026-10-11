@@ -13,3 +13,7 @@ export function initials(name: string, surname: string): string {
   const second = surname.trim().charAt(0);
   return `${first}${second}`.toUpperCase();
 }
+
+export function fullName(person: { name: string; surname: string }): string {
+  return `${person.name} ${person.surname}`;
+}

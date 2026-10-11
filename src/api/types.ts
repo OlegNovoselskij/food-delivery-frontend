@@ -51,3 +51,5 @@ export type QuestionManage = Schemas["QuestionManageOut"];
 export type QuestionInput = Schemas["QuestionIn"];
 export type QuizCreate = Schemas["QuizCreate"];
 export type QuizUpdate = Schemas["QuizUpdate"];
+export type PendingReview = Schemas["PendingReviewOut"];
+export type AttemptReviewRequest = Schemas["ReviewRequest"];

@@ -21,3 +21,9 @@ export function quizPath(quizId: number, courseId: number | null = null): string
 export function attemptPath(attemptId: number, courseId: number | null = null): string {
   return withCourse(`/learning/attempts/${attemptId}`, courseId);
 }
+
+export const GRADING_PATH = "/studio/grading";
+
+export function gradingAttemptPath(attemptId: number): string {
+  return `${GRADING_PATH}/${attemptId}`;
+}

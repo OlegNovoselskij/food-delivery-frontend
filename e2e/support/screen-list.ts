@@ -163,7 +163,11 @@ const pendingAttempt = once(async () => {
     { chooseTexts: [attempt.questions[1]?.options[0]?.text ?? ""] },
     { text: "Types catch mistakes before the code runs." },
   ]);
-  return { token: student.token, path: `/learning/attempts/${attemptId}?course=2` };
+  return {
+    token: student.token,
+    attemptId,
+    path: `/learning/attempts/${attemptId}?course=2`,
+  };
 });
 
 const reviewFormStudent = once(async () => (await startLearningCourse("shot-review", 3)).token);
@@ -534,5 +538,24 @@ export const SCREENS: readonly ScreenSpec[] = [
       await page.getByRole("button", { name: "Edit question 1" }).click();
     },
     waitFor: (page) => page.getByRole("button", { name: "Save question" }),
+  },
+  {
+    name: "studio-grading",
+    path: async () => {
+      await pendingAttempt();
+      return "/studio/grading";
+    },
+    signedInAs: SEED_USERS.teacher,
+    waitFor: (page) => page.getByRole("list", { name: "Attempts waiting for review" }),
+  },
+  {
+    name: "studio-grading-review",
+    path: async () => `/studio/grading/${(await pendingAttempt()).attemptId}`,
+    signedInAs: SEED_USERS.teacher,
+    prepare: async (page) => {
+      await page.getByLabel("Points for answer 1").fill("9");
+      await page.getByRole("button", { name: "Save grades" }).click();
+    },
+    waitFor: (page) => page.getByText("Enter whole points from 0 to 5"),
   },
 ];

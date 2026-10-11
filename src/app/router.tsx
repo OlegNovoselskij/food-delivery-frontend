@@ -96,6 +96,14 @@ export const routes: RouteObject[] = [
                     path: "studio/courses/new",
                     lazy: () => import("@/features/studio/pages/course-create-page"),
                   },
+                  {
+                    path: "studio/grading",
+                    lazy: () => import("@/features/studio/pages/grading-queue-page"),
+                  },
+                  {
+                    path: "studio/grading/:attemptId",
+                    lazy: () => import("@/features/studio/pages/grading-attempt-page"),
+                  },
                 ],
               },
               {

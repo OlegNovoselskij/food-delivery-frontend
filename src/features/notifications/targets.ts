@@ -1,5 +1,5 @@
 import type { Notification } from "@/api/types";
-import { attemptPath, learnPath } from "@/lib/paths";
+import { GRADING_PATH, attemptPath, learnPath } from "@/lib/paths";
 
 function numberField(payload: Notification["payload"], key: string): number | null {
   const value = payload[key];
@@ -11,7 +11,6 @@ function stringField(payload: Notification["payload"], key: string): string | nu
   return typeof value === "string" ? value : null;
 }
 
-export const GRADING_PATH = "/studio/grading";
 export const CERTIFICATES_PATH = "/certificates";
 
 export function notificationTarget(notification: Notification): string | null {
