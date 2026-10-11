@@ -1,4 +1,4 @@
-import type { Page } from "@playwright/test";
+import type { Locator, Page } from "@playwright/test";
 
 export interface ViewportSpec {
   label: string;
@@ -17,10 +17,11 @@ export type Theme = (typeof THEMES)[number];
 
 export interface ScreenSpec {
   name: string;
-  path: string;
+  path: string | (() => Promise<string>);
   signedInAs?: string;
+  intercept?: (page: Page) => Promise<void>;
   prepare?: (page: Page) => Promise<void>;
-  ready?: (page: Page) => Promise<void>;
+  waitFor?: (page: Page) => Locator;
 }
 
 export const SCREENSHOT_DIR = "docs/screenshots";

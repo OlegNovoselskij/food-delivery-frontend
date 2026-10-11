@@ -1,9 +1,11 @@
 import type { NavItem } from "@/components/layout/nav-types";
 import { ROLES, isRole, type Session } from "@/features/auth";
 
-const PUBLIC_NAV: readonly NavItem[] = [];
-const STUDENT_NAV: readonly NavItem[] = [];
-const TEACHER_NAV: readonly NavItem[] = [];
+const COURSES_NAV: NavItem = { to: "/courses", label: "Courses" };
+
+const PUBLIC_NAV: readonly NavItem[] = [COURSES_NAV];
+const STUDENT_NAV: readonly NavItem[] = [COURSES_NAV];
+const TEACHER_NAV: readonly NavItem[] = [COURSES_NAV];
 const ADMIN_NAV: readonly NavItem[] = [];
 
 export function mainNavFor(session: Session): readonly NavItem[] {

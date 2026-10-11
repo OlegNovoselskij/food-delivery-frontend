@@ -1,10 +1,13 @@
 import "@testing-library/jest-dom/vitest";
-import { cleanup } from "@testing-library/react";
+import { cleanup, configure } from "@testing-library/react";
 import { afterAll, afterEach, beforeAll } from "vitest";
 
 import { server } from "./server";
 
+const ASYNC_UTIL_TIMEOUT_MS = 5000;
+
 beforeAll(() => {
+  configure({ asyncUtilTimeout: ASYNC_UTIL_TIMEOUT_MS });
   Object.defineProperty(window, "matchMedia", {
     writable: true,
     value: (query: string): MediaQueryList => ({

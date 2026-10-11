@@ -1521,6 +1521,8 @@ export interface components {
             rating_avg: number | null;
             /** Reviews Count */
             reviews_count: number;
+            /** Modules Count */
+            modules_count: number;
             /**
              * Created At
              * Format: date-time
@@ -1545,6 +1547,8 @@ export interface components {
             rating_avg: number | null;
             /** Reviews Count */
             reviews_count: number;
+            /** Modules Count */
+            modules_count: number;
             /**
              * Created At
              * Format: date-time

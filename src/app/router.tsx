@@ -1,4 +1,4 @@
-import { createBrowserRouter, type RouteObject } from "react-router";
+import { Navigate, createBrowserRouter, type RouteObject } from "react-router";
 
 import { PageSkeleton } from "@/components/feedback/page-skeleton";
 import { GuestOnly, RequireAuth } from "@/features/auth";
@@ -37,7 +37,13 @@ export const routes: RouteObject[] = [
       {
         element: <MainLayout />,
         children: [
-          { index: true, lazy: () => import("@/features/landing/pages/landing-page") },
+          { index: true, element: <Navigate to="/courses" replace /> },
+          { path: "courses", lazy: () => import("@/features/catalog/pages/catalog-page") },
+          { path: "courses/:courseId", lazy: () => import("@/features/course/pages/course-page") },
+          {
+            path: "certificates/verify/:number",
+            lazy: () => import("@/features/certificates/pages/certificate-verify-page"),
+          },
           { path: "403", lazy: () => import("./pages/forbidden-page") },
           {
             element: <RequireAuth />,

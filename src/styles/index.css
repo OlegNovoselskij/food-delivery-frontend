@@ -11,6 +11,16 @@
   --color-night: #14172b;
   --color-night-brand: #3b47e0;
   --color-on-night: #ffffff;
+  --color-art-night: #14172b;
+  --color-art-indigo: #3b47e0;
+  --color-art-amber: #f2b01e;
+  --color-art-emerald: #139a7b;
+  --color-art-lilac: #dfe3fd;
+  --color-art-rose: #d6455d;
+  --color-art-sun: #f7c04a;
+  --color-art-periwinkle: #5560ea;
+  --color-art-mist: #c3c9fa;
+  --color-art-copper: #c9741a;
 }
 
 :root[data-theme="dark"] {

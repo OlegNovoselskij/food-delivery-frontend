@@ -4,7 +4,12 @@ import { seedToken } from "./support/api";
 import { SCREENS } from "./support/screen-list";
 import { SCREENSHOT_DIR, THEMES, TOKEN_STORAGE_KEY, VIEWPORTS } from "./support/screens";
 
+const EXTERNAL_IMAGES = "https://picsum.photos/**";
+const IDLE_TIMEOUT_MS = 2000;
+const ONLY = process.env.SCREEN;
+
 for (const screen of SCREENS) {
+  if (ONLY !== undefined && screen.name !== ONLY) continue;
   for (const viewport of VIEWPORTS) {
     for (const theme of THEMES) {
       test(`${screen.name} at ${viewport.label} in ${theme} theme`, async ({ browser }) => {
@@ -21,11 +26,17 @@ for (const screen of SCREENS) {
             [TOKEN_STORAGE_KEY, token] as const,
           );
         }
+        await context.route(EXTERNAL_IMAGES, (route) => route.abort());
         const page = await context.newPage();
-        await page.goto(screen.path);
+        await screen.intercept?.(page);
+        const path = typeof screen.path === "string" ? screen.path : await screen.path();
+        await page.goto(path);
         await screen.prepare?.(page);
-        await expect(page.locator("h1").first()).toBeVisible();
-        await screen.ready?.(page);
+        const anchor = screen.waitFor?.(page) ?? page.locator("h1").first();
+        await expect(anchor).toBeVisible();
+        await page
+          .waitForLoadState("networkidle", { timeout: IDLE_TIMEOUT_MS })
+          .catch(() => undefined);
         const hasHorizontalScroll = await page.evaluate(
           () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
         );
