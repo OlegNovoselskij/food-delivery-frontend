@@ -87,6 +87,8 @@ export function buildModule(overrides: Partial<ProgramModule> = {}): ProgramModu
     title: "Getting set up",
     position: 1,
     has_quiz: false,
+    quiz_id: null,
+    quiz_questions_count: 0,
     lessons: [buildLesson({ is_preview: true }), buildLesson({ id: 102, title: "Compiler" })],
     ...overrides,
   };

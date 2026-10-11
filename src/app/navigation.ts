@@ -9,7 +9,10 @@ const STUDENT_NAV: readonly NavItem[] = [
   { to: "/learning", label: "My learning", end: false },
   { to: "/certificates", label: "Certificates" },
 ];
-const TEACHER_NAV: readonly NavItem[] = [COURSES_NAV];
+const TEACHER_NAV: readonly NavItem[] = [
+  COURSES_NAV,
+  { to: "/studio", label: "Teaching", end: true },
+];
 const ADMIN_NAV: readonly NavItem[] = [];
 
 export function mainNavFor(session: Session): readonly NavItem[] {

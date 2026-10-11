@@ -40,3 +40,7 @@ export type ReviewCreate = Schemas["ReviewCreate"];
 export type ReviewUpdate = Schemas["ReviewUpdate"];
 export type Notification = Schemas["NotificationOut"];
 export type NotificationPage = Schemas["NotificationPage"];
+export type CourseCreate = Schemas["CourseCreate"];
+export type CourseUpdate = Schemas["CourseUpdate"];
+export type CourseStatRow = Schemas["CourseStatRow"];
+export type CourseStats = Schemas["CourseStatsOut"];

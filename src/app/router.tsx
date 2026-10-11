@@ -1,7 +1,7 @@
 import { Navigate, createBrowserRouter, type RouteObject } from "react-router";
 
 import { PageSkeleton } from "@/components/feedback/page-skeleton";
-import { GuestOnly, RequireAuth } from "@/features/auth";
+import { GuestOnly, RequireAuth, RequireRole } from "@/features/auth";
 
 import { AuthLayout } from "./layouts/auth-layout";
 import { MainLayout } from "./layouts/main-layout";
@@ -84,6 +84,19 @@ export const routes: RouteObject[] = [
               {
                 path: "learning/attempts/:attemptId",
                 lazy: () => import("@/features/quiz/pages/attempt-result-page"),
+              },
+              {
+                element: <RequireRole roles={["teacher"]} />,
+                children: [
+                  {
+                    path: "studio",
+                    lazy: () => import("@/features/studio/pages/studio-dashboard-page"),
+                  },
+                  {
+                    path: "studio/courses/new",
+                    lazy: () => import("@/features/studio/pages/course-create-page"),
+                  },
+                ],
               },
             ],
           },

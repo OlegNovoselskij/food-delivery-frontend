@@ -6,6 +6,19 @@ import { server } from "./server";
 
 const ASYNC_UTIL_TIMEOUT_MS = 5000;
 
+class InertWebSocket {
+  onopen: (() => void) | null = null;
+  onmessage: (() => void) | null = null;
+  onclose: (() => void) | null = null;
+  onerror: (() => void) | null = null;
+  send(): void {
+    return;
+  }
+  close(): void {
+    return;
+  }
+}
+
 beforeAll(() => {
   configure({ asyncUtilTimeout: ASYNC_UTIL_TIMEOUT_MS });
   Object.defineProperty(window, "matchMedia", {
@@ -32,6 +45,7 @@ beforeAll(() => {
   Element.prototype.scrollIntoView = (): void => undefined;
   Object.defineProperty(window, "scrollTo", { writable: true, value: () => undefined });
   server.listen({ onUnhandledRequest: "error" });
+  Object.defineProperty(globalThis, "WebSocket", { configurable: true, value: InertWebSocket });
 });
 
 afterEach(() => {

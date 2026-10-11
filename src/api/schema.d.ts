@@ -1894,6 +1894,10 @@ export interface components {
             position: number;
             /** Has Quiz */
             has_quiz: boolean;
+            /** Quiz Id */
+            quiz_id: number | null;
+            /** Quiz Questions Count */
+            quiz_questions_count: number;
             /** Lessons */
             lessons: components["schemas"]["LessonSummary"][];
         };
