@@ -558,4 +558,16 @@ export const SCREENS: readonly ScreenSpec[] = [
     },
     waitFor: (page) => page.getByText("Enter whole points from 0 to 5"),
   },
+  {
+    name: "studio-analytics",
+    path: `/studio/courses/${FASTAPI_COURSE_ID}/analytics`,
+    signedInAs: SEED_USERS.teacher,
+    waitFor: (page) => page.getByRole("table", { name: "Students" }),
+  },
+  {
+    name: "studio-analytics-empty",
+    path: async () => `/studio/courses/${(await emptyDraft()).courseId}/analytics`,
+    signedInAs: SEED_USERS.scratchTeacher,
+    waitFor: (page) => page.getByText("No students yet"),
+  },
 ];

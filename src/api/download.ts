@@ -25,3 +25,16 @@ export function saveBlob(blob: Blob, filename: string): void {
     URL.revokeObjectURL(url);
   }, 0);
 }
+
+interface DownloadResult {
+  data?: Blob | undefined;
+  response: Response;
+}
+
+export async function saveDownload(result: DownloadResult, fallbackName: string): Promise<void> {
+  const filename = filenameFromDisposition(
+    result.response.headers.get("Content-Disposition"),
+    fallbackName,
+  );
+  saveBlob(result.data ?? (await result.response.blob()), filename);
+}

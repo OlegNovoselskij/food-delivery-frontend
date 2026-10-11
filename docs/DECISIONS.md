@@ -26,3 +26,8 @@ One line per decision where the docs were silent.
 - The WebSocket sends `{"type": "notification", "notification": {...}}` wrapped, plus `connected` and `pong` control messages, so the client parses a typed union instead of treating every frame as a notification.
 - A pushed notification is prepended to the cached first page and the unread count is incremented; on every `connected` message the notification queries are refetched so anything published while the socket was down is not lost.
 - While the socket is not open the unread count is polled every 60 s.
+- Quizzes are created from the module card with one click using defaults (60% to pass, unlimited attempts); title and settings are edited on the quiz page.
+- Once a quiz has attempts, the quiz page locks question type, points, option correctness and deletion in the UI, matching the API's 409 rule; wording and explanations stay editable.
+- Written-answer grading lives at `/studio/grading` and `/studio/grading/:attemptId`; the form lists only answers with `needs_review` and requires whole points from 0 to the question's points.
+- `/studio/analytics` is not a separate page: the Teaching dashboard already shows the teacher report, so each course row links to its own analytics page.
+- Analytics sections load independently so one failing report does not hide the others; student filters and page live in the address.

@@ -1,7 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 
 import { api } from "@/api/client";
-import { filenameFromDisposition, saveBlob } from "@/api/download";
+import { saveDownload } from "@/api/download";
 import { unwrap } from "@/api/unwrap";
 
 export const certificateKeys = {
@@ -31,13 +31,9 @@ export async function downloadCertificatePdf(
   certificateId: number,
   certificateNumber: string,
 ): Promise<void> {
-  const { data, response } = await api.GET("/api/v1/certificates/{certificate_id}/pdf", {
+  const result = await api.GET("/api/v1/certificates/{certificate_id}/pdf", {
     params: { path: { certificate_id: certificateId } },
     parseAs: "blob",
   });
-  const filename = filenameFromDisposition(
-    response.headers.get("Content-Disposition"),
-    `${certificateNumber}.pdf`,
-  );
-  saveBlob(data ?? (await response.blob()), filename);
+  await saveDownload(result, `${certificateNumber}.pdf`);
 }
