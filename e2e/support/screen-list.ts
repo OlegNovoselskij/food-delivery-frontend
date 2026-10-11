@@ -1,4 +1,4 @@
-import { SEED_USERS, seedToken } from "./api";
+import { SEED_USERS, cancelWithToken, createStudent, enrollWithToken, seedToken } from "./api";
 import type { ScreenSpec } from "./screens";
 
 const REGISTER_URL = "**/api/v1/auth/register";
@@ -18,6 +18,33 @@ async function certificateNumber(): Promise<string> {
   if (first === undefined) throw new Error("The seed student has no certificate");
   return first.certificate_number;
 }
+
+function once<T>(factory: () => Promise<T>): () => Promise<T> {
+  let pending: Promise<T> | null = null;
+  return () => {
+    pending ??= factory();
+    return pending;
+  };
+}
+
+async function createStatesStudent(): Promise<string> {
+  const { token } = await createStudent("shot-states");
+  await enrollWithToken(token, 5);
+  await enrollWithToken(token, 3);
+  const cancelledId = await enrollWithToken(token, 6);
+  await cancelWithToken(token, cancelledId);
+  return token;
+}
+
+async function createPendingStudent(): Promise<string> {
+  const { token } = await createStudent("shot-pay");
+  await enrollWithToken(token, 5);
+  return token;
+}
+
+const studentWithEveryStatus = once(createStatesStudent);
+const studentWithPendingPayment = once(createPendingStudent);
+const emptyStudent = once(async () => (await createStudent("shot-empty")).token);
 
 export const SCREENS: readonly ScreenSpec[] = [
   { name: "not-found", path: "/no/such/page" },
@@ -141,5 +168,43 @@ export const SCREENS: readonly ScreenSpec[] = [
     name: "certificate-invalid",
     path: "/certificates/verify/CERT-0000-NOPE",
     waitFor: (page) => page.getByRole("heading", { name: "Certificate not found" }),
+  },
+  {
+    name: "learning",
+    path: "/learning",
+    signedInAs: SEED_USERS.student,
+    waitFor: (page) => page.getByRole("heading", { name: "FastAPI in Practice" }),
+  },
+  {
+    name: "learning-states",
+    path: "/learning",
+    tokenFor: studentWithEveryStatus,
+    waitFor: (page) => page.getByRole("heading", { name: "Marketing Analytics 101" }),
+  },
+  {
+    name: "learning-empty",
+    path: "/learning",
+    tokenFor: emptyStudent,
+    waitFor: (page) => page.getByText("You are not enrolled in any course yet"),
+  },
+  {
+    name: "payment-dialog",
+    path: `/courses/5`,
+    tokenFor: studentWithPendingPayment,
+    prepare: async (page) => {
+      await page.getByRole("button", { name: "Pay now" }).click();
+      await page.getByLabel("Card number").fill("4242424242424242");
+      await page.getByLabel("Expiry").fill("1299");
+    },
+    waitFor: (page) => page.getByRole("dialog", { name: "Complete your payment" }),
+  },
+  {
+    name: "confirm-cancel",
+    path: "/learning",
+    tokenFor: studentWithPendingPayment,
+    prepare: async (page) => {
+      await page.getByRole("button", { name: "Cancel enrollment" }).click();
+    },
+    waitFor: (page) => page.getByRole("alertdialog", { name: "Cancel enrollment?" }),
   },
 ];

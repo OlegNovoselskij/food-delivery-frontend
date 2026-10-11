@@ -68,3 +68,21 @@ export async function statusWithToken(path: string, token: string): Promise<numb
   });
   return response.status;
 }
+
+export async function enrollWithToken(token: string, courseId: number): Promise<number> {
+  const response = await fetch(`${API_URL}/courses/${courseId}/enroll`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!response.ok) throw new Error(`Enroll failed: ${response.status}`);
+  const enrollment = (await response.json()) as { id: number };
+  return enrollment.id;
+}
+
+export async function cancelWithToken(token: string, enrollmentId: number): Promise<void> {
+  const response = await fetch(`${API_URL}/enrollments/${enrollmentId}/cancel`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!response.ok) throw new Error(`Cancel failed: ${response.status}`);
+}

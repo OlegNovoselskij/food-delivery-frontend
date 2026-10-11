@@ -49,6 +49,7 @@ export const routes: RouteObject[] = [
             element: <RequireAuth />,
             children: [
               { path: "profile", lazy: () => import("@/features/profile/pages/profile-page") },
+              { path: "learning", lazy: () => import("@/features/learning/pages/learning-page") },
             ],
           },
           { path: "*", lazy: () => import("./pages/not-found-page") },

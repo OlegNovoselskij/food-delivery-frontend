@@ -21,3 +21,4 @@ export type ReviewPage = Schemas["ReviewPage"];
 export type Review = Schemas["ReviewOut"];
 export type Enrollment = Schemas["EnrollmentOut"];
 export type CertificateVerification = Schemas["CertificateVerifyOut"];
+export type PayRequest = Schemas["PayRequest"];

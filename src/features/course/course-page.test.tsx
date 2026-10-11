@@ -111,13 +111,14 @@ describe("course page", () => {
     expect(screen.queryByRole("link", { name: "Preview first lessons" })).not.toBeInTheDocument();
   });
 
-  it("shows a pending payment state", async () => {
+  it("offers payment and cancellation while the enrollment is pending", async () => {
     mockCourse({
       user: buildUser({ id: 2 }),
       enrollments: [buildEnrollment({ status: "pending_payment" })],
     });
     renderApp({ path: "/courses/1", token: "t" });
-    expect(await screen.findByText("Payment pending")).toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: "Pay now" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Cancel enrollment" })).toBeInTheDocument();
   });
 
   it("sends the owning teacher to the studio", async () => {

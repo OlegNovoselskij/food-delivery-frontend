@@ -2,6 +2,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { RouterProvider } from "react-router";
 
+import { ConfirmProvider } from "@/components/domain/confirm-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/features/auth";
 
@@ -18,9 +19,11 @@ export function App() {
     <AppErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <AuthGate>
-            <RouterProvider router={router} />
-          </AuthGate>
+          <ConfirmProvider>
+            <AuthGate>
+              <RouterProvider router={router} />
+            </AuthGate>
+          </ConfirmProvider>
           <Toaster />
         </AuthProvider>
       </QueryClientProvider>

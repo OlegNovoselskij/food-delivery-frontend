@@ -5,6 +5,7 @@ import { createMemoryRouter, RouterProvider, type RouteObject } from "react-rout
 import { authToken } from "@/api/auth-token";
 import { AuthGate } from "@/app/auth-gate";
 import { routes } from "@/app/router";
+import { ConfirmProvider } from "@/components/domain/confirm-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/features/auth";
 
@@ -23,9 +24,11 @@ export function renderApp({ path = "/", token, routeTree = routes }: RenderAppOp
   const view = render(
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <AuthGate>
-          <RouterProvider router={router} />
-        </AuthGate>
+        <ConfirmProvider>
+          <AuthGate>
+            <RouterProvider router={router} />
+          </AuthGate>
+        </ConfirmProvider>
         <Toaster />
       </AuthProvider>
     </QueryClientProvider>,

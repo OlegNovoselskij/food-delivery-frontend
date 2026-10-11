@@ -21,6 +21,15 @@ beforeAll(() => {
       dispatchEvent: () => false,
     }),
   });
+  window.ResizeObserver = class {
+    observe = (): void => undefined;
+    unobserve = (): void => undefined;
+    disconnect = (): void => undefined;
+  };
+  Element.prototype.hasPointerCapture = () => false;
+  Element.prototype.setPointerCapture = (): void => undefined;
+  Element.prototype.releasePointerCapture = (): void => undefined;
+  Element.prototype.scrollIntoView = (): void => undefined;
   Object.defineProperty(window, "scrollTo", { writable: true, value: () => undefined });
   server.listen({ onUnhandledRequest: "error" });
 });

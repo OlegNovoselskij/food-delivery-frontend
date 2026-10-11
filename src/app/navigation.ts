@@ -4,7 +4,10 @@ import { ROLES, isRole, type Session } from "@/features/auth";
 const COURSES_NAV: NavItem = { to: "/courses", label: "Courses" };
 
 const PUBLIC_NAV: readonly NavItem[] = [COURSES_NAV];
-const STUDENT_NAV: readonly NavItem[] = [COURSES_NAV];
+const STUDENT_NAV: readonly NavItem[] = [
+  COURSES_NAV,
+  { to: "/learning", label: "My learning", end: false },
+];
 const TEACHER_NAV: readonly NavItem[] = [COURSES_NAV];
 const ADMIN_NAV: readonly NavItem[] = [];
 

@@ -17,8 +17,11 @@ for (const screen of SCREENS) {
           viewport: { width: viewport.width, height: viewport.height },
           colorScheme: theme,
         });
-        if (screen.signedInAs !== undefined) {
-          const token = await seedToken(screen.signedInAs);
+        const token =
+          screen.signedInAs !== undefined
+            ? await seedToken(screen.signedInAs)
+            : await screen.tokenFor?.();
+        if (token !== undefined) {
           await context.addInitScript(
             ([key, value]) => {
               window.localStorage.setItem(key, value);

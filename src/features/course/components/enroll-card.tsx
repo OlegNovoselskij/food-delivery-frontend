@@ -1,12 +1,17 @@
 import { Award, ClipboardCheck, Clock, Video } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router";
 
-import type { Course, Program } from "@/api/types";
+import type { Course, Enrollment, Program } from "@/api/types";
 import { PriceTag } from "@/components/domain/price-tag";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useEnrollMutation } from "@/features/enrollment";
+import {
+  ENROLLMENT_STATUS,
+  PaymentDialog,
+  useCancelEnrollment,
+  useEnrollMutation,
+} from "@/features/enrollment";
 import { isFree } from "@/lib/money";
 import { signInPathFor } from "@/lib/safe-redirect";
 
@@ -44,10 +49,72 @@ function includedItems(program: Program | undefined): { icon: LucideIcon; text: 
   return items;
 }
 
-function PrimaryAction({ course, access }: { course: Course; access: CourseAccess }) {
-  const enroll = useEnrollMutation(course.id);
-  const free = isFree(course.price);
+function AwaitingPaymentActions({
+  enrollment,
+  onPay,
+}: {
+  enrollment: Enrollment;
+  onPay: () => void;
+}) {
+  const { cancel, isPending } = useCancelEnrollment();
 
+  return (
+    <>
+      <Button size="lg" className="w-full" onClick={onPay}>
+        Pay now
+      </Button>
+      <Button
+        variant="ghost"
+        className="w-full"
+        disabled={isPending}
+        onClick={() => {
+          void cancel(enrollment);
+        }}
+      >
+        Cancel enrollment
+      </Button>
+    </>
+  );
+}
+
+function AvailableActions({
+  course,
+  onPaymentRequired,
+}: {
+  course: Course;
+  onPaymentRequired: () => void;
+}) {
+  const enroll = useEnrollMutation(course.id);
+
+  return (
+    <Button
+      size="lg"
+      className="w-full"
+      disabled={enroll.isPending}
+      onClick={() => {
+        enroll.mutate(undefined, {
+          onSuccess: (enrollment) => {
+            if (enrollment.status === ENROLLMENT_STATUS.pendingPayment) onPaymentRequired();
+          },
+        });
+      }}
+    >
+      {enroll.isPending
+        ? "Enrolling"
+        : isFree(course.price)
+          ? "Enroll for free"
+          : "Enroll in course"}
+    </Button>
+  );
+}
+
+interface PrimaryActionsProps {
+  course: Course;
+  access: CourseAccess;
+  onPay: () => void;
+}
+
+function PrimaryActions({ course, access, onPay }: PrimaryActionsProps) {
   switch (access.kind) {
     case "visitor":
       return (
@@ -68,24 +135,14 @@ function PrimaryAction({ course, access }: { course: Course; access: CourseAcces
         </Button>
       );
     case "awaiting-payment":
-      return <Badge tone="warning">Payment pending</Badge>;
+      return <AwaitingPaymentActions enrollment={access.enrollment} onPay={onPay} />;
     case "available":
-      return (
-        <Button
-          size="lg"
-          className="w-full"
-          disabled={enroll.isPending}
-          onClick={() => {
-            enroll.mutate();
-          }}
-        >
-          {enroll.isPending ? "Enrolling" : free ? "Enroll for free" : "Enroll in course"}
-        </Button>
-      );
+      return <AvailableActions course={course} onPaymentRequired={onPay} />;
   }
 }
 
 export function EnrollCard({ course, program, access }: EnrollCardProps) {
+  const [paymentOpen, setPaymentOpen] = useState(false);
   const preview = program ? firstPreviewLesson(program) : null;
   const showPreview = preview !== null && access.kind !== "learning" && access.kind !== "owner";
 
@@ -99,7 +156,13 @@ export function EnrollCard({ course, program, access }: EnrollCardProps) {
         {isFree(course.price) ? "Free, lifetime access" : "One-time payment, lifetime access"}
       </p>
       <div className="mt-6 flex flex-col gap-3">
-        <PrimaryAction course={course} access={access} />
+        <PrimaryActions
+          course={course}
+          access={access}
+          onPay={() => {
+            setPaymentOpen(true);
+          }}
+        />
         {showPreview ? (
           <Button asChild variant="secondary" size="lg" className="w-full">
             <Link to={lessonPath(course.id, preview.id)}>Preview first lessons</Link>
@@ -114,6 +177,14 @@ export function EnrollCard({ course, program, access }: EnrollCardProps) {
           </li>
         ))}
       </ul>
+      {access.kind === "awaiting-payment" ? (
+        <PaymentDialog
+          enrollmentId={access.enrollment.id}
+          course={access.enrollment.course}
+          open={paymentOpen}
+          onOpenChange={setPaymentOpen}
+        />
+      ) : null}
     </aside>
   );
 }

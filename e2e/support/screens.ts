@@ -19,6 +19,7 @@ export interface ScreenSpec {
   name: string;
   path: string | (() => Promise<string>);
   signedInAs?: string;
+  tokenFor?: () => Promise<string>;
   intercept?: (page: Page) => Promise<void>;
   prepare?: (page: Page) => Promise<void>;
   waitFor?: (page: Page) => Locator;
