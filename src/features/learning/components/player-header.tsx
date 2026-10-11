@@ -39,7 +39,7 @@ export function PlayerHeader({
         Your path
       </Button>
       <NotificationBell />
-      <AccountActions />
+      <AccountActions compact />
     </header>
   );
 }

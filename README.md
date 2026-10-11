@@ -98,6 +98,14 @@ docker run -p 8080:80 \
 
 `API_ORIGIN`, `API_WS_ORIGIN` and `STORAGE_ORIGIN` feed the content security policy so the browser may call the API, open the WebSocket and upload straight to object storage. The storage bucket must allow the frontend origin in its CORS rules (methods `GET`, `PUT`, `HEAD`, exposed header `ETag`), and the backend must list the frontend origin in `ALLOWED_ORIGINS`.
 
+## Quality and verification
+
+- `npm run check` (types, lint with zero warnings, formatting, no-comments rule, 398 unit and component tests, production build) passes before every commit. Line coverage of the logic files (`src/lib`, `src/hooks`, feature logic) is 86 percent.
+- 53 Playwright journeys run against the real backend: sign-up with the code read from Mailpit, catalog, enrollment and payment, learning player, quizzes and certificates, live notifications over the WebSocket, reviews, the studio (curriculum builder with keyboard reordering, real video upload, quiz builder, grading, analytics and CSV export), the admin area and the theme choice.
+- `e2e/a11y.spec.ts` runs axe (WCAG 2 A and AA, 2.1 A and AA) on every screen in light and dark at 1440 and 390 px and fails on any serious or critical violation.
+- Lighthouse (mobile, simulated slow 4G) on the production build: the course page scores 100 for performance, 98 for accessibility and 100 for best practices. The catalog scores 100, 98 and 100 when course covers are served from the same network; with the seed data's third-party `picsum.photos` covers its performance is 78 because the largest paint waits for those external images.
+- The largest chunk is the admin overview with Recharts at 114 kB gzip; the main bundle is about 89 kB gzip. `npx knip` reports no unused exports or dependencies.
+
 ## Screenshots
 
 Every screen is captured at 1440 and 390 px, in light and dark, in `docs/screenshots/<name>-<theme>-<width>.png`.
