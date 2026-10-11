@@ -115,3 +115,34 @@ export async function deleteDraftCourse(draft: DraftCourse): Promise<void> {
   });
   if (!response.ok) throw new Error(`Delete draft failed: ${response.status}`);
 }
+
+export interface VideoLessonCourse extends DraftCourse {
+  lessonId: number;
+  title: string;
+}
+
+export async function createCourseWithVideoLesson(): Promise<VideoLessonCourse> {
+  const token = await seedToken(SEED_USERS.scratchTeacher);
+  const title = `E2E upload ${Date.now()}`;
+  const course = await call<Created>(token, "/courses", "POST", {
+    category_id: CATEGORY_ID,
+    title,
+    description: "Created by the upload tests.",
+    level: "beginner",
+    price: "0",
+  });
+  const module = await call<Created>(token, `/courses/${course.id}/modules`, "POST", {
+    title: "Uploads",
+  });
+  const lesson = await call<Created>(token, `/modules/${module.id}/lessons`, "POST", {
+    title: "Upload me",
+    lesson_type: "video",
+    duration_minutes: 1,
+    is_preview: true,
+  });
+  return { courseId: course.id, lessonId: lesson.id, token, title };
+}
+
+export async function archivePublishedCourse(courseId: number, token: string): Promise<void> {
+  await call(token, `/courses/${courseId}/archive`, "POST");
+}

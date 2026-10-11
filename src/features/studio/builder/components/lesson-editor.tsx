@@ -24,6 +24,7 @@ import { useUnsavedChangesGuard } from "@/hooks/use-unsaved-changes";
 import { formSubmit } from "@/lib/form-submit";
 
 import { useDeleteLesson, useUpdateLesson } from "../hooks";
+import { LessonMedia } from "./lesson-media";
 import {
   LESSON_TYPE_OPTIONS,
   isLessonType,
@@ -180,6 +181,7 @@ export function LessonEditor({ courseId, lessonId }: LessonEditorProps) {
       <p className="text-small text-muted">Editing lesson</p>
       <h2 className="mt-1 mb-5 text-h2">{lesson.data.title}</h2>
       <LessonForm key={lesson.data.id} courseId={courseId} lesson={lesson.data} />
+      <LessonMedia courseId={courseId} lesson={lesson.data} />
     </div>
   );
 }
