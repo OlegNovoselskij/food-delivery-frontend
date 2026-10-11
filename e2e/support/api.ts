@@ -7,6 +7,8 @@ export const SEED_PASSWORD = "Demo12345!";
 export const SEED_USERS = {
   student: "andrii@demo.example.com",
   teacher: "olena@demo.example.com",
+  scratchTeacher: "iryna@demo.example.com",
+  cleanTeacher: "taras@demo.example.com",
   admin: "admin@demo.example.com",
 } as const;
 

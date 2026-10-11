@@ -12,7 +12,14 @@ import {
   startLearningCourse,
   submitAttemptWithToken,
 } from "./api";
-import { archiveCourse, createQuizCourse, type QuizCourse } from "./courses";
+import {
+  archiveCourse,
+  createDraftCourse,
+  createQuizCourse,
+  deleteDraftCourse,
+  type DraftCourse,
+  type QuizCourse,
+} from "./courses";
 import { ensureSeedVideos } from "./media";
 import type { ScreenSpec } from "./screens";
 
@@ -92,8 +99,20 @@ const quizCourse = once(() => {
   return createQuizCourse();
 });
 
+const createdDrafts: DraftCourse[] = [];
+
+async function newDraft(withModule: boolean): Promise<DraftCourse> {
+  const draft = await createDraftCourse(withModule);
+  createdDrafts.push(draft);
+  return draft;
+}
+
+const draftWithModule = once(() => newDraft(true));
+const emptyDraft = once(() => newDraft(false));
+
 export async function disposeQuizCourse(): Promise<void> {
   if (quizCourseCreated) await archiveCourse(await quizCourse());
+  for (const draft of createdDrafts) await deleteDraftCourse(draft).catch(() => undefined);
 }
 
 async function quizStudent(prefix: string): Promise<{ token: string; course: QuizCourse }> {
@@ -446,5 +465,48 @@ export const SCREENS: readonly ScreenSpec[] = [
       await page.getByText("Your quiz was graded").first().waitFor();
     },
     waitFor: (page) => page.getByRole("dialog", { name: "Notifications" }),
+  },
+  {
+    name: "studio-dashboard",
+    path: "/studio",
+    signedInAs: SEED_USERS.cleanTeacher,
+    waitFor: (page) => page.getByRole("heading", { name: "Your courses" }),
+  },
+  {
+    name: "studio-create",
+    path: "/studio/courses/new",
+    signedInAs: SEED_USERS.teacher,
+    waitFor: (page) => page.getByRole("heading", { level: 1, name: "Create a course" }),
+  },
+  {
+    name: "studio-builder",
+    path: "/studio/courses/2/lessons/8",
+    signedInAs: SEED_USERS.teacher,
+    waitFor: (page) => page.getByRole("heading", { level: 2, name: "Dependency injection" }),
+  },
+  {
+    name: "studio-builder-empty",
+    path: async () => `/studio/courses/${(await emptyDraft()).courseId}`,
+    signedInAs: SEED_USERS.teacher,
+    waitFor: (page) => page.getByText("No modules yet"),
+  },
+  {
+    name: "studio-builder-add-lesson",
+    path: async () => `/studio/courses/${(await draftWithModule()).courseId}`,
+    signedInAs: SEED_USERS.teacher,
+    prepare: async (page) => {
+      await page.getByRole("button", { name: "Add lesson to First module" }).click();
+      await page.getByLabel("Lesson title").fill("Introduction");
+    },
+    waitFor: (page) => page.getByLabel("Lesson title"),
+  },
+  {
+    name: "studio-settings",
+    path: "/studio/courses/2",
+    signedInAs: SEED_USERS.teacher,
+    prepare: async (page) => {
+      await page.getByRole("tab", { name: "Settings" }).click();
+    },
+    waitFor: (page) => page.getByRole("button", { name: "Save details" }),
   },
 ];

@@ -98,6 +98,19 @@ export const routes: RouteObject[] = [
                   },
                 ],
               },
+              {
+                element: <RequireRole roles={["teacher", "admin"]} />,
+                children: [
+                  {
+                    path: "studio/courses/:courseId",
+                    lazy: () => import("@/features/studio/pages/course-builder-page"),
+                  },
+                  {
+                    path: "studio/courses/:courseId/lessons/:lessonId",
+                    lazy: () => import("@/features/studio/pages/course-builder-page"),
+                  },
+                ],
+              },
             ],
           },
           { path: "*", lazy: () => import("./pages/not-found-page") },

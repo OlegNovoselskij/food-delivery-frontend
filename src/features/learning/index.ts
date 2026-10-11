@@ -1,1 +1,1 @@
-export { progressQuery } from "./api";
+export { learningKeys, lessonQuery, progressQuery } from "./api";

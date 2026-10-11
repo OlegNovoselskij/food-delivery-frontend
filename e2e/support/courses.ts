@@ -29,7 +29,7 @@ interface Created {
 }
 
 export async function createQuizCourse(price = "0"): Promise<QuizCourse> {
-  const token = await seedToken(SEED_USERS.teacher);
+  const token = await seedToken(SEED_USERS.scratchTeacher);
   const title = `E2E quiz course ${Date.now()}`;
   const course = await call<Created>(token, "/courses", "POST", {
     category_id: CATEGORY_ID,
@@ -86,4 +86,32 @@ export async function createQuizCourse(price = "0"): Promise<QuizCourse> {
 
 export async function archiveCourse(course: QuizCourse): Promise<void> {
   await call(course.token, `/courses/${course.courseId}/archive`, "POST");
+}
+
+export interface DraftCourse {
+  courseId: number;
+  token: string;
+}
+
+export async function createDraftCourse(withModule: boolean): Promise<DraftCourse> {
+  const token = await seedToken(SEED_USERS.scratchTeacher);
+  const course = await call<Created>(token, "/courses", "POST", {
+    category_id: CATEGORY_ID,
+    title: `E2E draft ${Date.now()}`,
+    description: "A draft course used for screenshots.",
+    level: "beginner",
+    price: "0",
+  });
+  if (withModule) {
+    await call<Created>(token, `/courses/${course.id}/modules`, "POST", { title: "First module" });
+  }
+  return { courseId: course.id, token };
+}
+
+export async function deleteDraftCourse(draft: DraftCourse): Promise<void> {
+  const response = await fetch(`${API_URL}/courses/${draft.courseId}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${draft.token}` },
+  });
+  if (!response.ok) throw new Error(`Delete draft failed: ${response.status}`);
 }

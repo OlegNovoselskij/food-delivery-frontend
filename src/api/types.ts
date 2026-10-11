@@ -44,3 +44,5 @@ export type CourseCreate = Schemas["CourseCreate"];
 export type CourseUpdate = Schemas["CourseUpdate"];
 export type CourseStatRow = Schemas["CourseStatRow"];
 export type CourseStats = Schemas["CourseStatsOut"];
+export type LessonCreate = Schemas["LessonCreate"];
+export type LessonUpdate = Schemas["LessonUpdate"];

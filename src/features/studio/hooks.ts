@@ -62,7 +62,6 @@ export function useCourseStatusActions(course: Pick<Course, "id" | "title">) {
       refresh();
       notify.success("Course published. It is now visible in the catalog.");
     },
-    onError: notify.error,
   });
 
   const archive = useMutation({
