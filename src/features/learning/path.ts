@@ -39,7 +39,7 @@ function quizNode(
       title: quiz.title,
       meta: quiz.passed ? "Passed" : "Not passed yet",
       state: quiz.passed ? "done" : "upcoming",
-      href: quizPath(quiz.id),
+      href: quizPath(quiz.id, module.course_id),
     };
   }
   if (!module.has_quiz) return null;

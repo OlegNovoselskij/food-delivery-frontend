@@ -52,3 +52,60 @@ export function RatingBadge({ value, count, className }: RatingBadgeProps) {
     </span>
   );
 }
+
+interface StarInputProps {
+  value: number;
+  onChange: (value: number) => void;
+  label: string;
+  disabled?: boolean;
+}
+
+export function StarInput({ value, onChange, label, disabled = false }: StarInputProps) {
+  const choose = (next: number) => {
+    onChange(Math.min(MAX_STARS, Math.max(1, next)));
+  };
+  const move = (delta: number) => {
+    choose(value === 0 ? 1 : value + delta);
+  };
+
+  return (
+    <div role="radiogroup" aria-label={label} className="inline-flex gap-1">
+      {STAR_STEPS.map((step) => {
+        const rating = step + 1;
+        const checked = value === rating;
+        return (
+          <button
+            key={rating}
+            type="button"
+            role="radio"
+            aria-checked={checked}
+            aria-label={`${rating} ${rating === 1 ? "star" : "stars"}`}
+            tabIndex={checked || (value === 0 && rating === 1) ? 0 : -1}
+            disabled={disabled}
+            onClick={() => {
+              choose(rating);
+            }}
+            onKeyDown={(event) => {
+              if (event.key === "ArrowRight" || event.key === "ArrowUp") {
+                event.preventDefault();
+                move(1);
+              } else if (event.key === "ArrowLeft" || event.key === "ArrowDown") {
+                event.preventDefault();
+                move(-1);
+              }
+            }}
+            className="flex size-9 items-center justify-center rounded-control hover:bg-sunken disabled:opacity-55"
+          >
+            <Star
+              aria-hidden="true"
+              className={cn(
+                "size-6 text-amber-500",
+                rating <= value ? "fill-current" : "text-line-strong",
+              )}
+            />
+          </button>
+        );
+      })}
+    </div>
+  );
+}

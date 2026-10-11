@@ -1,17 +1,16 @@
 import { queryOptions } from "@tanstack/react-query";
 
 import { api } from "@/api/client";
+import { rootKeys } from "@/api/query-keys";
 import { unwrap } from "@/api/unwrap";
 
 const COURSE_STALE_TIME_MS = 60_000;
 const PROGRAM_STALE_TIME_MS = 5 * 60_000;
-export const REVIEWS_PAGE_SIZE = 10;
 
 export const courseKeys = {
   all: ["course"] as const,
-  detail: (courseId: number) => ["course", courseId, "detail"] as const,
-  program: (courseId: number) => ["course", courseId, "program"] as const,
-  reviews: (courseId: number, page: number) => ["course", courseId, "reviews", page] as const,
+  detail: (courseId: number) => [...rootKeys.course(courseId), "detail"] as const,
+  program: (courseId: number) => [...rootKeys.course(courseId), "program"] as const,
 };
 
 export function courseDetailQuery(courseId: number) {
@@ -33,21 +32,5 @@ export function courseProgramQuery(courseId: number) {
         }),
       ),
     staleTime: PROGRAM_STALE_TIME_MS,
-  });
-}
-
-export function courseReviewsQuery(courseId: number, page: number) {
-  return queryOptions({
-    queryKey: courseKeys.reviews(courseId, page),
-    queryFn: () =>
-      unwrap(
-        api.GET("/api/v1/courses/{course_id}/reviews", {
-          params: {
-            path: { course_id: courseId },
-            query: { page, size: REVIEWS_PAGE_SIZE },
-          },
-        }),
-      ),
-    staleTime: COURSE_STALE_TIME_MS,
   });
 }

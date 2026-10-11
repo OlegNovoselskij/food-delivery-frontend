@@ -110,3 +110,102 @@ export async function createEnrolledStudent(prefix: string, courseId: number): P
   if (status === "pending_payment") await payWithToken(student.token, enrollmentId);
   return student;
 }
+
+export async function completeLessonWithToken(
+  token: string,
+  enrollmentId: number,
+  lessonId: number,
+): Promise<void> {
+  const response = await fetch(
+    `${API_URL}/enrollments/${enrollmentId}/lessons/${lessonId}/complete`,
+    {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+    },
+  );
+  if (!response.ok) throw new Error(`Complete lesson failed: ${response.status}`);
+}
+
+interface AttemptQuestion {
+  id: number;
+  question_type: string;
+  options: { id: number; text: string }[];
+}
+
+interface StartedAttempt {
+  id: number;
+  questions: AttemptQuestion[];
+}
+
+export async function startAttemptWithToken(
+  token: string,
+  quizId: number,
+): Promise<StartedAttempt> {
+  const response = await fetch(`${API_URL}/quizzes/${quizId}/attempts`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!response.ok) throw new Error(`Start attempt failed: ${response.status}`);
+  return (await response.json()) as StartedAttempt;
+}
+
+export interface AnswerChoice {
+  chooseTexts?: readonly string[];
+  text?: string;
+}
+
+export async function submitAttemptWithToken(
+  token: string,
+  attempt: StartedAttempt,
+  choices: readonly AnswerChoice[],
+): Promise<number> {
+  const answers = attempt.questions.flatMap((question, index) => {
+    const choice = choices[index];
+    if (choice === undefined) return [];
+    const optionIds = question.options
+      .filter((option) => choice.chooseTexts?.includes(option.text) === true)
+      .map((option) => option.id);
+    return [
+      {
+        question_id: question.id,
+        option_ids: optionIds,
+        ...(choice.text === undefined ? {} : { text: choice.text }),
+      },
+    ];
+  });
+  const response = await fetch(`${API_URL}/attempts/${attempt.id}/submit`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ answers }),
+  });
+  if (!response.ok) throw new Error(`Submit attempt failed: ${response.status}`);
+  return attempt.id;
+}
+
+export async function createReviewWithToken(
+  token: string,
+  courseId: number,
+  rating: number,
+  comment: string,
+): Promise<void> {
+  const response = await fetch(`${API_URL}/courses/${courseId}/reviews`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ rating, comment }),
+  });
+  if (!response.ok) throw new Error(`Create review failed: ${response.status}`);
+}
+
+export async function startLearningCourse(prefix: string, courseId: number): Promise<TestUser> {
+  const student = await createEnrolledStudent(prefix, courseId);
+  const enrollments = await fetch(`${API_URL}/enrollments/mine?course_id=${courseId}`, {
+    headers: { Authorization: `Bearer ${student.token}` },
+  });
+  const [enrollment] = (await enrollments.json()) as { id: number }[];
+  const program = await fetch(`${API_URL}/courses/${courseId}/program`);
+  const body = (await program.json()) as { modules: { lessons: { id: number }[] }[] };
+  const lesson = body.modules[0]?.lessons[0];
+  if (enrollment === undefined || lesson === undefined) throw new Error("Nothing to start");
+  await completeLessonWithToken(student.token, enrollment.id, lesson.id);
+  return student;
+}

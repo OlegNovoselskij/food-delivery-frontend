@@ -1,4 +1,4 @@
-export { enrollmentKeys, myEnrollmentsQuery } from "./api";
+export { courseEnrollmentQuery, enrollmentKeys, myEnrollmentsQuery } from "./api";
 export { EnrollmentActions } from "./components/enrollment-actions";
 export { EnrollmentRow } from "./components/enrollment-row";
 export { EnrollmentStatusBadge } from "./components/enrollment-status-badge";

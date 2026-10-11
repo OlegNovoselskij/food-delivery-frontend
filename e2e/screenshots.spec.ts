@@ -1,12 +1,21 @@
 import { expect, test } from "@playwright/test";
 
 import { seedToken } from "./support/api";
-import { SCREENS } from "./support/screen-list";
+import { resetRateLimits } from "./support/rate-limits";
+import { SCREENS, disposeQuizCourse } from "./support/screen-list";
 import { SCREENSHOT_DIR, THEMES, TOKEN_STORAGE_KEY, VIEWPORTS } from "./support/screens";
 
+test.beforeAll(async () => {
+  await resetRateLimits();
+});
+
+test.afterAll(async () => {
+  await disposeQuizCourse().catch(() => undefined);
+});
+
+const ONLY = process.env.SCREEN;
 const EXTERNAL_IMAGES = "https://picsum.photos/**";
 const IDLE_TIMEOUT_MS = 2000;
-const ONLY = process.env.SCREEN;
 
 for (const screen of SCREENS) {
   if (ONLY !== undefined && screen.name !== ONLY) continue;

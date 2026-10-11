@@ -2,6 +2,7 @@ import { expect, test, type Page } from "@playwright/test";
 
 import { createEnrolledStudent, type TestUser } from "./support/api";
 import { ensureSeedVideos } from "./support/media";
+import { resetRateLimits } from "./support/rate-limits";
 import { useToken } from "./support/session";
 
 const COURSE_ID = 2;
@@ -13,6 +14,7 @@ const VIDEO_LESSON_IDS = [7, 8, 10, 11] as const;
 let student: TestUser;
 
 test.beforeAll(async () => {
+  await resetRateLimits();
   await ensureSeedVideos(COURSE_ID, VIDEO_LESSON_IDS);
   student = await createEnrolledStudent("e2e-player", COURSE_ID);
 });

@@ -1,11 +1,13 @@
 import { expect, test, type Page } from "@playwright/test";
 
 import { createStudent, type TestUser } from "./support/api";
+import { resetRateLimits } from "./support/rate-limits";
 import { useToken } from "./support/session";
 
 let student: TestUser;
 
 test.beforeAll(async () => {
+  await resetRateLimits();
   student = await createStudent("e2e-enroll");
 });
 

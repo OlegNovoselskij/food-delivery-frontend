@@ -19,3 +19,7 @@ One line per decision where the docs were silent.
 - Forgot and reset password pages are open to signed-in users too, because the profile page links to them for sign out everywhere.
 - `jsx-a11y/media-has-caption` is turned off for the lesson video component in the ESLint config because the API has no captions or subtitle tracks.
 - The player is a route layout without a footer; the lesson page renders its own slim header, and visitors can open preview lessons without signing in.
+- The API has no "my review" endpoint, so the student's own review is found by reading the first 100 reviews of the course; the API rejects a duplicate, and its message is shown.
+- Quiz and attempt pages use the main layout (top bar) instead of the slim player bar, and links carry a `?course=` query so the page can show the course context and a back link.
+- A quiz has no time limit in the API, so the quiz page shows progress as "N of M answered" and the pass mark instead of a timer. Answers are saved as a draft in `localStorage` per attempt and removed after submit.
+- The e2e global setup and each e2e spec file restart the backend Valkey container to clear rate limits (10 registrations per hour); set `E2E_KEEP_RATE_LIMITS=1` to skip it.

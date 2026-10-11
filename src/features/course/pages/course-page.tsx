@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/features/auth";
 import { useCourseEnrollment } from "@/features/enrollment";
+import { ReviewsPanel } from "@/features/reviews";
 import { parseId } from "@/lib/ids";
 
 import { hasFullAccess, resolveCourseAccess } from "../access";
@@ -17,7 +18,6 @@ import { CourseHeader } from "../components/course-header";
 import { CourseSkeleton, ProgramSkeleton } from "../components/course-skeleton";
 import { EnrollCard } from "../components/enroll-card";
 import { ProgramAccordion } from "../components/program-accordion";
-import { ReviewsPanel } from "../components/reviews-panel";
 import { TeacherPanel } from "../components/teacher-panel";
 
 const HTTP_NOT_FOUND = 404;
@@ -114,7 +114,11 @@ function CourseView({ courseId }: { courseId: number }) {
               ) : null}
             </TabsContent>
             <TabsContent value="reviews">
-              <ReviewsPanel courseId={courseId} />
+              <ReviewsPanel
+                courseId={courseId}
+                viewerId={session.status === "authenticated" ? session.user.id : null}
+                canReview={access.kind === "learning"}
+              />
             </TabsContent>
             <TabsContent value="teacher">
               <TeacherPanel course={course.data} />

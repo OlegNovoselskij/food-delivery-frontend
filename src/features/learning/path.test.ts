@@ -47,7 +47,7 @@ describe("buildPath for a learner", () => {
       kind: "quiz",
       id: 100,
       state: "upcoming",
-      href: "/learning/quizzes/100",
+      href: "/learning/quizzes/100?course=5",
     });
   });
 

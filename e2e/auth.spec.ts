@@ -8,6 +8,11 @@ import {
   uniqueEmail,
 } from "./support/api";
 import { knownMessageIds, waitForCode } from "./support/mailpit";
+import { resetRateLimits } from "./support/rate-limits";
+
+test.beforeAll(async () => {
+  await resetRateLimits();
+});
 
 async function enterCode(page: Page, code: string): Promise<void> {
   await page.getByRole("textbox", { name: "Digit 1 of 6" }).click();

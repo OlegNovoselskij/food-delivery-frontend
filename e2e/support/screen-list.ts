@@ -1,6 +1,18 @@
 import type { Page } from "@playwright/test";
 
-import { SEED_USERS, cancelWithToken, createStudent, enrollWithToken, seedToken } from "./api";
+import {
+  SEED_USERS,
+  cancelWithToken,
+  createEnrolledStudent,
+  createReviewWithToken,
+  createStudent,
+  enrollWithToken,
+  seedToken,
+  startAttemptWithToken,
+  startLearningCourse,
+  submitAttemptWithToken,
+} from "./api";
+import { archiveCourse, createQuizCourse, type QuizCourse } from "./courses";
 import { ensureSeedVideos } from "./media";
 import type { ScreenSpec } from "./screens";
 
@@ -72,6 +84,69 @@ async function createPendingStudent(): Promise<string> {
   await enrollWithToken(token, 5);
   return token;
 }
+
+let quizCourseCreated = false;
+
+const quizCourse = once(() => {
+  quizCourseCreated = true;
+  return createQuizCourse();
+});
+
+export async function disposeQuizCourse(): Promise<void> {
+  if (quizCourseCreated) await archiveCourse(await quizCourse());
+}
+
+async function quizStudent(prefix: string): Promise<{ token: string; course: QuizCourse }> {
+  const course = await quizCourse();
+  const student = await createStudent(prefix);
+  await enrollWithToken(student.token, course.courseId);
+  return { token: student.token, course };
+}
+
+const quizIntroStudent = once(() => quizStudent("shot-quiz-intro"));
+const quizTakingStudent = once(() => quizStudent("shot-quiz-take"));
+
+async function submittedAttempt(
+  prefix: string,
+  choices: readonly { chooseTexts: readonly string[] }[],
+): Promise<{ token: string; path: string }> {
+  const { token, course } = await quizStudent(prefix);
+  const attempt = await startAttemptWithToken(token, course.quizId);
+  const attemptId = await submitAttemptWithToken(token, attempt, choices);
+  return { token, path: `/learning/attempts/${attemptId}?course=${course.courseId}` };
+}
+
+const failedAttempt = once(() =>
+  submittedAttempt("shot-failed", [{ chooseTexts: ["var"] }, { chooseTexts: ["object"] }]),
+);
+const passedAttempt = once(() =>
+  submittedAttempt("shot-passed", [
+    { chooseTexts: ["const"] },
+    { chooseTexts: ["string", "number"] },
+  ]),
+);
+const pendingAttempt = once(async () => {
+  const student = await createEnrolledStudent("shot-pending", 2);
+  const attempt = await startAttemptWithToken(student.token, 2);
+  const attemptId = await submitAttemptWithToken(student.token, attempt, [
+    { chooseTexts: [attempt.questions[0]?.options[0]?.text ?? ""] },
+    { chooseTexts: [attempt.questions[1]?.options[0]?.text ?? ""] },
+    { text: "Types catch mistakes before the code runs." },
+  ]);
+  return { token: student.token, path: `/learning/attempts/${attemptId}?course=2` };
+});
+
+const reviewFormStudent = once(async () => (await startLearningCourse("shot-review", 3)).token);
+const reviewOwnStudent = once(async () => {
+  const student = await startLearningCourse("shot-review-own", 3);
+  await createReviewWithToken(
+    student.token,
+    3,
+    5,
+    "Clear explanations and exercises that mirror real work.",
+  );
+  return student.token;
+});
 
 const studentWithEveryStatus = once(createStatesStudent);
 const studentWithPendingPayment = once(createPendingStudent);
@@ -284,5 +359,57 @@ export const SCREENS: readonly ScreenSpec[] = [
       if (await open.isVisible()) await open.click();
     },
     waitFor: (page) => page.locator("h1").or(page.getByRole("dialog")).first(),
+  },
+  {
+    name: "quiz-intro",
+    path: async () => {
+      const { course } = await quizIntroStudent();
+      return `/learning/quizzes/${course.quizId}?course=${course.courseId}`;
+    },
+    tokenFor: async () => (await quizIntroStudent()).token,
+    waitFor: (page) => page.getByRole("heading", { level: 1, name: "Basics checkpoint" }),
+  },
+  {
+    name: "quiz-taking",
+    path: async () => {
+      const { course } = await quizTakingStudent();
+      return `/learning/quizzes/${course.quizId}?course=${course.courseId}`;
+    },
+    tokenFor: async () => (await quizTakingStudent()).token,
+    prepare: async (page) => {
+      await page.getByRole("button", { name: /Start quiz|Continue quiz/ }).click();
+      await page.getByRole("radio", { name: "const" }).check();
+    },
+    waitFor: (page) => page.getByText("Pass mark: 60%"),
+  },
+  {
+    name: "quiz-result-failed",
+    path: async () => (await failedAttempt()).path,
+    tokenFor: async () => (await failedAttempt()).token,
+    waitFor: (page) => page.getByRole("heading", { name: "Not passed yet" }),
+  },
+  {
+    name: "quiz-result-passed",
+    path: async () => (await passedAttempt()).path,
+    tokenFor: async () => (await passedAttempt()).token,
+    waitFor: (page) => page.getByRole("heading", { name: "You passed" }),
+  },
+  {
+    name: "quiz-result-pending",
+    path: async () => (await pendingAttempt()).path,
+    tokenFor: async () => (await pendingAttempt()).token,
+    waitFor: (page) => page.getByRole("heading", { name: "Waiting for your teacher" }),
+  },
+  {
+    name: "reviews-form",
+    path: "/courses/3?tab=reviews",
+    tokenFor: reviewFormStudent,
+    waitFor: (page) => page.getByRole("heading", { name: "Write a review" }),
+  },
+  {
+    name: "reviews-own",
+    path: "/courses/3?tab=reviews",
+    tokenFor: reviewOwnStudent,
+    waitFor: (page) => page.getByRole("region", { name: "Your review" }),
   },
 ];
