@@ -7,3 +7,9 @@ test-results
 .env.production
 *.local
 .lighthouse
+**/node_modules/
+.vscode/
+.idea/
+*.log
+Thumbs.db
+.DS_Store
